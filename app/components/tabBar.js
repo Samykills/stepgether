@@ -3,22 +3,23 @@ import React, {useEffect} from 'react';
 import {Text, Platform, Animated, TouchableWithoutFeedback} from 'react-native';
 import {inject, observer} from 'mobx-react';
 
-const ANIMATION_DURATION = 250;
+const ANIMATION_DURATION_1 = 250;
+const ANIMATION_DURATION_2 = 350;
 const animatedTabBar = new Animated.Value(0);
 const animatedTabBarOpacity = new Animated.Value(0);
 const animatedYPostion = new Animated.Value(0);
-const animatedPostion = new Animated.Value(0);
+const animatedXPostion = new Animated.Value(0);
 const topAnimatedInterpolation = animatedYPostion.interpolate({
   inputRange: [0, 1],
   outputRange: [0, -15],
   extrapolate: 'clamp',
 });
-const leftAnimatedInterpolation = animatedPostion.interpolate({
+const leftAnimatedInterpolation = animatedXPostion.interpolate({
   inputRange: [0, 1],
   outputRange: [0, -10],
   extrapolate: 'clamp',
 });
-const rightAnimatedInterpolation = animatedPostion.interpolate({
+const rightAnimatedInterpolation = animatedXPostion.interpolate({
   inputRange: [0, 1],
   outputRange: [0, 10],
   extrapolate: 'clamp',
@@ -43,11 +44,11 @@ const TabBar = ({TabBarStore, RouterStore}) => {
     Animated.parallel([
       Animated.timing(animatedTabBar, {
         toValue: 0,
-        duration: 350,
+        duration: ANIMATION_DURATION_2,
       }),
       Animated.timing(animatedTabBarOpacity, {
         toValue: 1,
-        duration: 350,
+        duration: ANIMATION_DURATION_2,
       }),
     ]).start();
 
@@ -56,11 +57,11 @@ const TabBar = ({TabBarStore, RouterStore}) => {
       Animated.sequence([
         Animated.timing(animatedTabBar, {
           toValue: 1,
-          duration: 350,
+          duration: ANIMATION_DURATION_2,
         }),
         Animated.timing(animatedTabBarOpacity, {
           toValue: 0.2,
-          duration: 350,
+          duration: ANIMATION_DURATION_2,
         }),
       ]).start();
     }, 1500);
@@ -76,45 +77,45 @@ const TabBar = ({TabBarStore, RouterStore}) => {
   switch (currentScene) {
     case 'home':
       Animated.parallel([
-        Animated.timing(animatedPostion, {
+        Animated.timing(animatedXPostion, {
           toValue: 0,
-          duration: ANIMATION_DURATION,
+          duration: ANIMATION_DURATION_1,
           useNativeDriver: true,
         }),
         Animated.timing(animatedYPostion, {
           toValue: 1,
-          duration: ANIMATION_DURATION,
+          duration: ANIMATION_DURATION_1,
           useNativeDriver: true,
         }),
         Animated.timing(animatedTabBar, {
           toValue: 0,
-          duration: 350,
+          duration: ANIMATION_DURATION_2,
         }),
         Animated.timing(animatedTabBarOpacity, {
           toValue: 1,
-          duration: 350,
+          duration: ANIMATION_DURATION_2,
         }),
       ]).start();
       break;
     default:
       Animated.parallel([
-        Animated.timing(animatedPostion, {
+        Animated.timing(animatedXPostion, {
           toValue: 1,
-          duration: ANIMATION_DURATION,
+          duration: ANIMATION_DURATION_1,
           useNativeDriver: true,
         }),
         Animated.timing(animatedYPostion, {
           toValue: 0,
-          duration: ANIMATION_DURATION,
+          duration: ANIMATION_DURATION_1,
           useNativeDriver: true,
         }),
         Animated.timing(animatedTabBar, {
           toValue: 0,
-          duration: 350,
+          duration: ANIMATION_DURATION_2,
         }),
         Animated.timing(animatedTabBarOpacity, {
           toValue: 1,
-          duration: 350,
+          duration: ANIMATION_DURATION_2,
         }),
       ]).start();
       break;
