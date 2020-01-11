@@ -128,7 +128,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.tipper"
+        applicationId "com.stepgether"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

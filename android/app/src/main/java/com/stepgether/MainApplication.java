@@ -1,4 +1,4 @@
-package com.tipper;
+package com.stepgether;
 
 import android.app.Application;
 import android.content.Context;

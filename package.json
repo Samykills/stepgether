@@ -1,5 +1,5 @@
 {
-  "name": "tipper",
+  "name": "stepgether",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -23,7 +23,8 @@
     "react-native-safe-area-context": "^0.6.1",
     "react-native-screens": "^2.0.0-alpha.22",
     "react-native-sound-player": "^0.10.3",
-    "react-native-tab-view": "^2.11.0"
+    "react-native-tab-view": "^2.11.0",
+    "rn-apple-healthkit": "^0.7.3"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
