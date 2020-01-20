@@ -1,8 +1,9 @@
-import TabBarStore from './tabBarStore';
 import RouterStore from './routerStore';
-
+import AuthStore from './authStore';
+import ErrorStore from './errorStore';
 const Store = {
-  TabBarStore,
   RouterStore,
+  AuthStore,
+  ErrorStore
 };
 export default Store;

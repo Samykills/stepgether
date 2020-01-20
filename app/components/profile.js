@@ -1,15 +1,12 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {SafeAreaView, Text} from 'react-native';
-import {inject, observer} from 'mobx-react';
 import {useFocusEffect} from '@react-navigation/native';
 
-const Tab1 = ({TabBarStore}) => {
-  const {setCurrentScene} = TabBarStore;
+const Profile = () => {
 
-  useFocusEffect(() => {
-    setTimeout(() => setCurrentScene(), 0);
-  });
+
+  useFocusEffect(() => {});
 
   return (
     <SafeAreaView
@@ -18,8 +15,8 @@ const Tab1 = ({TabBarStore}) => {
         justifyContent: 'center',
         alignItems: 'center',
       }}>
-      <Text>tab1</Text>
+      <Text>Profile</Text>
     </SafeAreaView>
   );
 };
-export default inject('TabBarStore')(observer(Tab1));
+export default Profile;
