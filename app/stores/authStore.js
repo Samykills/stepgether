@@ -5,6 +5,7 @@ import ErrorStore from './errorStore';
 class AuthStore {
   @observable userToken;
   @observable isLoading = true; //only use it for appRouter.js
+  @observable selectedDevice;
   constructor() {
     // AsyncStorage.removeItem(AuthConstants.USER_SESSION_STORE);
     this.loadDataFromStorage();

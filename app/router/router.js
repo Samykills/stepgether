@@ -4,6 +4,7 @@ import Feed from '../components/feed';
 import Profile from '../components/profile';
 import Splash from '../components/splash';
 import Login from '../components/login';
+import DeviceSelection from '../components/deviceSelection';
 import {NavigationNativeContainer} from '@react-navigation/native';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {inject, observer} from 'mobx-react';
@@ -15,7 +16,7 @@ const Tab = createMaterialTopTabNavigator();
 const Stack = createNativeStackNavigator();
 
 const AppRouter = ({RouterStore, AuthStore, ErrorStore}) => {
-  const {userToken, isLoading} = AuthStore;
+  const {userToken, isLoading, selectedDevice} = AuthStore;
   const {showErrorView} = ErrorStore;
   console.warn('approuter', userToken);
 
@@ -41,19 +42,27 @@ const AppRouter = ({RouterStore, AuthStore, ErrorStore}) => {
                 options={{headerShown: false}}
               />
             ) : userToken ? (
-              <Stack.Screen
-                name="home"
-                options={{headerShown: false}}
-                component={() => (
-                  <Tab.Navigator
-                    initialRouteName="Feed"
-                    tabBarPosition={'bottom'}>
-                    <Tab.Screen name="Feed" component={Feed} />
-                    <Tab.Screen name="Group" component={Group} />
-                    <Tab.Screen name="Profile" component={Profile} />
-                  </Tab.Navigator>
-                )}
-              />
+              selectedDevice ? (
+                <Stack.Screen
+                  name="home"
+                  options={{headerShown: false}}
+                  component={() => (
+                    <Tab.Navigator
+                      initialRouteName="Feed"
+                      tabBarPosition={'bottom'}>
+                      <Tab.Screen name="Feed" component={Feed} />
+                      <Tab.Screen name="Group" component={Group} />
+                      <Tab.Screen name="Profile" component={Profile} />
+                    </Tab.Navigator>
+                  )}
+                />
+              ) : (
+                <Stack.Screen
+                  name="deviceSelection"
+                  component={DeviceSelection}
+                  options={{headerTitle: 'Select Device'}}
+                />
+              )
             ) : (
               <Stack.Screen name="login" component={Login} />
             )}
