@@ -1,30 +1,31 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {SafeAreaView, Text, Button, Platform} from 'react-native';
+import {SafeAreaView, Platform} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
 import {Apple_GetSteps} from '../healthKits/appleHealthKit';
-import {Fitbit_Init} from '../healthKits/fitbitKit';
+import {Button} from 'react-native-elements';
+import {inject} from 'mobx-react';
 
-const Feed = () => {
+const Feed = ({AuthStore, navigation}) => {
+  const {unSetUserToken, unSetSelectedDeviceToken} = AuthStore;
   useFocusEffect(() => {
     Platform.OS === 'ios' ? Apple_GetSteps() : null;
   }, []);
-
-  const onClick = () => {
-    Fitbit_Init();
-  };
 
   return (
     <SafeAreaView
       style={{
         flex: 1,
-        justifyContent: 'center',
+        justifyContent: 'space-around',
         alignItems: 'center',
       }}>
-      <Text>Feeds</Text>
-      <Button onPress={onClick} title={'fitbit'} />
-      <Button onPress={onClick} title={'fitbit'} />
+      <Button
+        title={'Select Device'}
+        onPress={() => navigation.navigate('deviceSelection')}
+      />
+      <Button title={'Reset Device'} onPress={unSetSelectedDeviceToken} />
+      <Button title={'Logout'} onPress={unSetUserToken} />
     </SafeAreaView>
   );
 };
-export default Feed;
+export default inject('AuthStore')(Feed);

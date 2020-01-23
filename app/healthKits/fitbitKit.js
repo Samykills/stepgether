@@ -10,7 +10,6 @@ export const Fitbit_Init = async () => {
   const token = await authorize(auth_config);
   // AsyncStorage.setItem(FITBIT_AUTH_COOKIE, token);
   Fitbit_UserProfile(token);
-  debugger;
 };
 
 export const Fitbit_UserProfile = token => {
@@ -28,7 +27,7 @@ const auth_config = {
   clientId: CLIENT_ID,
   clientSecret: SECRET_KEY,
   redirectUrl: 'stepgether://fitbit', //note: path is required
-  scopes: ['activity', 'sleep', 'user'],
+  scopes: ['activity', 'sleep','profile'],
   serviceConfiguration: {
     authorizationEndpoint: 'https://www.fitbit.com/oauth2/authorize',
     tokenEndpoint: 'https://api.fitbit.com/oauth2/token',

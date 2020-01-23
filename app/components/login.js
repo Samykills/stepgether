@@ -10,7 +10,6 @@ const Login = ({AuthStore}) => {
       <Button
         title="Login via Google"
         onPress={() => {
-          debugger;
           setUserToken('dummyToken123123123');
         }}
       />

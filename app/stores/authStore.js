@@ -4,10 +4,9 @@ import {AuthConstants} from '../constants';
 import ErrorStore from './errorStore';
 class AuthStore {
   @observable userToken;
+  @observable selectedDeviceToken;
   @observable isLoading = true; //only use it for appRouter.js
-  @observable selectedDevice;
   constructor() {
-    // AsyncStorage.removeItem(AuthConstants.USER_SESSION_STORE);
     this.loadDataFromStorage();
   }
 
@@ -16,6 +15,9 @@ class AuthStore {
       console.warn('async call start');
       this.userToken = await AsyncStorage.getItem(
         AuthConstants.USER_SESSION_STORE,
+      );
+      this.selectedDeviceToken = await AsyncStorage.getItem(
+        AuthConstants.USER_SELECTED_DEVICE,
       );
       // throw 'error aagaya';
       console.warn('async call end');
@@ -29,6 +31,21 @@ class AuthStore {
   @action setUserToken = token => {
     this.userToken = token;
     AsyncStorage.setItem(AuthConstants.USER_SESSION_STORE, token);
+  };
+
+  @action setSelectedDeviceToken = deviceType => {
+    this.selectedDeviceToken = deviceType;
+    AsyncStorage.setItem(AuthConstants.USER_SELECTED_DEVICE, deviceType);
+  };
+
+  @action unSetUserToken = () => {
+    this.userToken = undefined;
+    AsyncStorage.removeItem(AuthConstants.USER_SESSION_STORE);
+  };
+
+  @action unSetSelectedDeviceToken = () => {
+    this.selectedDeviceToken = undefined;
+    AsyncStorage.removeItem(AuthConstants.USER_SELECTED_DEVICE);
   };
 }
 
