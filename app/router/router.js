@@ -61,7 +61,7 @@ const AppRouter = ({RouterStore, AuthStore, ErrorStore}) => {
                       )}
                     />
                     <Stack.Screen
-                      name="deviceSelection"
+                      name="deviceSelection2"
                       component={DeviceSelection}
                       options={{headerTitle: 'Select Device'}}
                     />

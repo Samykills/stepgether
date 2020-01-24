@@ -21,7 +21,7 @@ const Feed = ({AuthStore, navigation}) => {
       }}>
       <Button
         title={'Select Device'}
-        onPress={() => navigation.navigate('deviceSelection')}
+        onPress={() => navigation.navigate('deviceSelection2')}
       />
       <Button title={'Reset Device'} onPress={unSetSelectedDeviceToken} />
       <Button title={'Logout'} onPress={unSetUserToken} />
