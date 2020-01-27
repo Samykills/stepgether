@@ -3,11 +3,12 @@ import {View} from 'react-native';
 import {Button} from 'react-native-elements';
 import {inject} from 'mobx-react';
 import {Fitbit_Init} from '../healthKits/fitbitKit';
-
+import {DeviceConstants} from '../constants';
 const DeviceSelection = ({AuthStore}) => {
   const {setSelectedDeviceToken} = AuthStore;
   const fitbitInit = () => {
     Fitbit_Init();
+    setSelectedDeviceToken(DeviceConstants.DEVICE_FITBIT);
   };
 
   return (
@@ -16,15 +17,14 @@ const DeviceSelection = ({AuthStore}) => {
       <Button
         title={'FitBit'}
         accessibilityLabel={'Fitbit'}
-        onPress={() => {
-          fitbitInit();
-          setSelectedDeviceToken('Fitbit');
-        }}
+        onPress={fitbitInit}
       />
       <Button
         title={'Apple Watch'}
         accessibilityLabel={'Apple Watch'}
-        onPress={() => setSelectedDeviceToken('Apple Watch')}
+        onPress={() =>
+          setSelectedDeviceToken(DeviceConstants.DEVICE_APPLE_WATCH)
+        }
       />
     </View>
   );

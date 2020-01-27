@@ -1,3 +1,4 @@
 import * as AuthConstants from './authConstants';
-
-export {AuthConstants};
+import * as FitbitConstants from './fitbitConstants';
+import * as DeviceConstants from './deviceConstants';
+export {AuthConstants, FitbitConstants, DeviceConstants};

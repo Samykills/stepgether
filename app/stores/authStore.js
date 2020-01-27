@@ -1,29 +1,39 @@
-import {observable, computed, action} from 'mobx';
+import {observable, action} from 'mobx';
 import AsyncStorage from '@react-native-community/async-storage';
-import {AuthConstants} from '../constants';
+import {AuthConstants, FitbitConstants, DeviceConstants} from '../constants';
 import ErrorStore from './errorStore';
+import {Fitbit_Init} from '../healthKits/fitbitKit';
 class AuthStore {
   @observable userToken;
   @observable selectedDeviceToken;
   @observable isLoading = true; //only use it for appRouter.js
+  fitbitApiAccessToken='';
+
   constructor() {
     this.loadDataFromStorage();
   }
 
   loadDataFromStorage = async () => {
     try {
-      console.warn('async call start');
       this.userToken = await AsyncStorage.getItem(
         AuthConstants.USER_SESSION_STORE,
       );
       this.selectedDeviceToken = await AsyncStorage.getItem(
         AuthConstants.USER_SELECTED_DEVICE,
       );
-      // throw 'error aagaya';
-      console.warn('async call end');
+      switch (this.selectedDeviceToken) {
+        case DeviceConstants.DEVICE_FITBIT:
+          await Fitbit_Init();
+          // this.selectedDeviceToken = selectedDeviceToken;
+          break;
+        case DeviceConstants.DEVICE_APPLE_WATCH:
+          // this.selectedDeviceToken = selectedDeviceToken;
+          break;
+        default:
+          break;
+      }
     } catch (e) {
-      // ErrorStore.setError({showErrorView: true, error: e});
-      console.warn('async Storage fuckedUp');
+      ErrorStore.setError({showErrorView: true, error: e});
     }
     this.isLoading = false;
   };
@@ -46,6 +56,24 @@ class AuthStore {
   @action unSetSelectedDeviceToken = () => {
     this.selectedDeviceToken = undefined;
     AsyncStorage.removeItem(AuthConstants.USER_SELECTED_DEVICE);
+  };
+
+  @action setFitbitAccessToken = token => {
+    this.fitbitApiAccessToken = token;
+    AsyncStorage.setItem(
+      FitbitConstants.FITBIT_AUTH_COOKIE,
+      JSON.stringify(token),
+    );
+  };
+
+  getFitbitAccessToken = async () => {
+    const token = await AsyncStorage.getItem(
+      FitbitConstants.FITBIT_AUTH_COOKIE,
+    );
+    if (token) {
+      return JSON.parse(token);
+    }
+    return null;
   };
 }
 
