@@ -6,8 +6,8 @@ import {Fitbit_Init} from '../healthKits/fitbitKit';
 import {DeviceConstants} from '../constants';
 const DeviceSelection = ({AuthStore}) => {
   const {setSelectedDeviceToken} = AuthStore;
-  const fitbitInit = () => {
-    Fitbit_Init();
+  const fitbitInit = async () => {
+    await Fitbit_Init();
     setSelectedDeviceToken(DeviceConstants.DEVICE_FITBIT);
   };
 

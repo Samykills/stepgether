@@ -1,22 +1,50 @@
-/* eslint-disable react-native/no-inline-styles */
-import React from 'react';
-import {SafeAreaView, Text} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {View, SafeAreaView, Text} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
+import {Apple_GetSteps} from '../healthKits/appleHealthKit';
+import {Fitbit_UserActivity} from '../healthKits/fitbitKit';
+import {inject} from 'mobx-react';
+import {DeviceConstants} from '../constants';
 
-const Profile = () => {
+const Profile = ({AuthStore}) => {
+  const [activity, setActivity] = useState(null);
+  const {selectedDeviceToken} = AuthStore;
+  const fitBitActivity = async () => {
+    const activity = await Fitbit_UserActivity();
+    setActivity(activity);
+  };
 
-
-  useFocusEffect(() => {});
+  useEffect(() => {
+    switch (selectedDeviceToken) {
+      case DeviceConstants.DEVICE_FITBIT:
+        fitBitActivity();
+        break;
+      case DeviceConstants.DEVICE_APPLE_WATCH:
+        Apple_GetSteps();
+        break;
+      default:
+        break;
+    }
+  }, []);
 
   return (
     <SafeAreaView
       style={{
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+        backgroundColor: '#FFF',
       }}>
-      <Text>Profile</Text>
+      <View style={{padding: 20}}>
+        <Text style={{fontSize: 32}}>Hi User,</Text>
+      </View>
+      <View style={{paddingLeft: 20}}>
+        <Text style={{fontSize: 12, textDecorationLine: 'underline'}}>
+          Analytics
+        </Text>
+      </View>
+      <View style={{paddingLeft: 30, paddingTop: 20}}>
+        <Text>{JSON.stringify(activity)}</Text>
+      </View>
     </SafeAreaView>
   );
 };
-export default Profile;
+export default inject('AuthStore')(Profile);
