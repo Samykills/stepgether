@@ -52,11 +52,11 @@ const AppRouter = ({RouterStore, AuthStore, ErrorStore}) => {
                       options={{headerShown: false}}
                       component={() => (
                         <Tab.Navigator
-                          initialRouteName="Feed"
+                          initialRouteName="Profile"
                           tabBarPosition={'bottom'}>
                           <Tab.Screen name="Feed" component={Feed} />
-                          <Tab.Screen name="Group" component={Group} />
                           <Tab.Screen name="Profile" component={Profile} />
+                          <Tab.Screen name="Group" component={Group} />
                         </Tab.Navigator>
                       )}
                     />

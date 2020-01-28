@@ -30,14 +30,10 @@ export const Fitbit_Init = async () => {
 };
 
 const fitbitApi = url => {
-  debugger;
-
   const fitbitUrl = url.replace(
     '$userId',
-    AuthStore.fitbitApiAccessToken.tokenAdditionalParameters.user_id,
+    AuthStore.fitbitApiAccessToken.additionalParameters.user_id,
   );
-  debugger;
-  //TO-DO fix this some problem here
   return fetch(fitbitUrl, {
     method: 'GET',
     headers: {
@@ -46,31 +42,22 @@ const fitbitApi = url => {
   });
 };
 
-export const Fitbit_UserActivity = token => {
-  const url = `https://api.fitbit.com/1/user/$userId/activities/date/2020-01-27.json`;
+/**
+ * Get user activity for a certain date
+ * @param {Date} date == null then takes current date.
+ */
+export const Fitbit_UserActivity = date => {
+  const queryDate = date
+    ? date.toISOString().split('T')[0]
+    : new Date().toISOString().split('T')[0];
+  const url = `https://api.fitbit.com/1/user/$userId/activities/date/${queryDate}.json`;
   return fitbitApi(url).then(res => res.json());
 };
 
-export const Fitbit_UserProfile = token => {
+export const Fitbit_UserProfile = () => {
   const url = `https://api.fitbit.com/1/user/$userId/profile.json`;
-  fitbitApi(url)
-    .then(res => {
-      if (res.status == 401) {
-      }
-      return res.json();
-    })
-    .then(res => {
-      debugger;
-    });
+  return fitbitApi(url).then(res => res.json());
 };
-
-// Log in to get an authentication token
-// const authState = await ;
-
-// // Refresh token
-// const refreshedState = await refresh(auth_config, {
-//   refreshToken: authState.refreshToken,
-// });
 
 // // Revoke token
 // await revoke(config, {
