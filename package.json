@@ -15,6 +15,8 @@
     "@react-navigation/material-top-tabs": "^5.0.0-alpha.25",
     "@react-navigation/native": "^5.0.0-alpha.21",
     "@react-navigation/native-stack": "^5.0.0-alpha.19",
+    "lottie-ios": "3.1.3",
+    "lottie-react-native": "^3.3.2",
     "mobx": "^5.15.1",
     "mobx-react": "^6.1.4",
     "qs": "^6.9.1",
