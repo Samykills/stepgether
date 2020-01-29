@@ -51,6 +51,7 @@ export const Fitbit_UserActivity = date => {
     ? date.toISOString().split('T')[0]
     : new Date().toISOString().split('T')[0];
   const url = `https://api.fitbit.com/1/user/$userId/activities/date/${queryDate}.json`;
+  //TO-DO save the result to our server.
   return fitbitApi(url).then(res => res.json());
 };
 
