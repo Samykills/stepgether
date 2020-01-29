@@ -30,10 +30,10 @@ export const Fitbit_Init = async () => {
 };
 
 const fitbitApi = url => {
-  const fitbitUrl = url.replace(
-    '$userId',
-    AuthStore.fitbitApiAccessToken.additionalParameters.user_id,
-  );
+  const userId = AuthStore.fitbitApiAccessToken.tokenAdditionalParameters
+    ? AuthStore.fitbitApiAccessToken.tokenAdditionalParameters.user_id
+    : AuthStore.fitbitApiAccessToken.additionalParameters.user_id;
+  const fitbitUrl = url.replace('$userId', userId);
   return fetch(fitbitUrl, {
     method: 'GET',
     headers: {

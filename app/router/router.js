@@ -20,7 +20,6 @@ const Stack = createNativeStackNavigator();
 const AppRouter = ({RouterStore, AuthStore, ErrorStore}) => {
   const {userToken, isLoading, selectedDeviceToken} = AuthStore;
   const {showErrorView} = ErrorStore;
-  console.warn('approuter', userToken);
 
   return (
     <SafeAreaProvider>
