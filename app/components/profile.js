@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useReducer, useEffect} from 'react';
 import {View, SafeAreaView, Platform, Text} from 'react-native';
 import {Apple_GetSteps} from '../healthKits/appleHealthKit';
 import {Fitbit_UserActivity} from '../healthKits/fitbitKit';
@@ -8,26 +8,56 @@ import AnimateNumber from 'react-native-animate-number';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
 import {Icon} from 'react-native-elements';
 
+const FITBIT_ACTIVITY = 'fitbitActivity';
+const APPLE_ACTIVITY = 'appleActivity';
 const Profile = ({AuthStore}) => {
-  const [state, setState] = useState({
-    activity: '',
-    steps: 0,
-    caloriesBurned: 0,
-    activeTime: 0,
-    distance: 0,
-    goalDistance: 1,
-    goalSteps: 1,
-    goalCaloriesBurned: 1,
-    goalActiveTime: 1,
-    selectedDate: new Date(),
-  });
+  const [state, dispatch] = useReducer(
+    (state, action) => {
+      switch (action.type) {
+        case FITBIT_ACTIVITY:
+          return {
+            ...state,
+            activity: action.payload.fitBitActivity,
+            steps: action.payload.fitBitActivity.summary.steps,
+            caloriesBurned: action.payload.fitBitActivity.summary.caloriesOut,
+            activeTime: action.payload.totalTimeActive,
+            distance: action.payload.distance,
+            goalDistance: action.payload.fitBitActivity.goals.distance,
+            goalSteps: action.payload.fitBitActivity.goals.steps,
+            goalCaloriesBurned: action.payload.fitBitActivity.goals.caloriesOut,
+            goalActiveTime: action.payload.fitBitActivity.goals.activeMinutes,
+            selectedDate: action.payload.selectedDate,
+          };
+        case APPLE_ACTIVITY:
+          return {...state};
+        default:
+          throw new Error();
+      }
+    },
+    {
+      activity: '',
+      steps: 0,
+      caloriesBurned: 0,
+      activeTime: 0,
+      distance: 0,
+      goalDistance: 1,
+      goalSteps: 1,
+      goalCaloriesBurned: 1,
+      goalActiveTime: 1,
+      selectedDate: new Date(),
+    },
+  );
 
   const {selectedDeviceToken} = AuthStore;
 
   useEffect(() => {
+    getActivity(new Date());
+  }, []);
+
+  const getActivity = date => {
     switch (selectedDeviceToken) {
       case DeviceConstants.DEVICE_FITBIT:
-        fitBitActivity();
+        fitBitActivity(date);
         break;
       case DeviceConstants.DEVICE_APPLE_WATCH:
         Platform.OS == 'ios' ? Apple_GetSteps() : null;
@@ -35,10 +65,10 @@ const Profile = ({AuthStore}) => {
       default:
         break;
     }
-  }, []);
+  };
 
   const fitBitActivity = async date => {
-    const fitBitActivity = await Fitbit_UserActivity(date ? date : null);
+    const fitBitActivity = await Fitbit_UserActivity(date);
     const fairlyActiveMinutes = fitBitActivity.summary.fairlyActiveMinutes,
       lightlyActiveMinutes = fitBitActivity.summary.lightlyActiveMinutes,
       veryActiveMinutes = fitBitActivity.summary.veryActiveMinutes;
@@ -50,25 +80,21 @@ const Profile = ({AuthStore}) => {
     fitBitActivity.summary.distances.map(dist => {
       distance = distance + dist.distance;
     });
-    setState({
-      ...state,
-      activity: fitBitActivity,
-      steps: fitBitActivity.summary.steps,
-      caloriesBurned: fitBitActivity.summary.caloriesOut,
-      activeTime: totalTimeActive,
-      distance: distance,
-      goalDistance: fitBitActivity.goals.distance,
-      goalSteps: fitBitActivity.goals.steps,
-      goalCaloriesBurned: fitBitActivity.goals.caloriesOut,
-      goalActiveTime: fitBitActivity.goals.activeMinutes,
+    dispatch({
+      type: FITBIT_ACTIVITY,
+      payload: {
+        fitBitActivity: fitBitActivity,
+        totalTimeActive: totalTimeActive,
+        distance: distance,
+        selectedDate: date,
+      },
     });
   };
 
   const onBackPress = () => {
     let newDate = new Date();
     newDate.setDate(state.selectedDate.getDate() - 1);
-    setState({...state, selectedDate: newDate});
-    fitBitActivity(newDate);
+    getActivity(newDate);
   };
 
   return (
@@ -99,7 +125,7 @@ const Profile = ({AuthStore}) => {
           <Text>
             {state.selectedDate.getDate() == new Date().getDate()
               ? 'Today'
-              : new Date().toISOString().split('T')[0]}
+              : state.selectedDate.toISOString().split('T')[0]}
           </Text>
         </View>
       </View>
@@ -124,7 +150,7 @@ const Profile = ({AuthStore}) => {
                   return Math.ceil(val);
                 }}
               />
-              <Text>steps</Text>
+              <Text>Steps</Text>
             </>
           )}
         />
@@ -152,7 +178,7 @@ const Profile = ({AuthStore}) => {
                 }}
               />
 
-              <Text style={{fontSize: 10, fontWeight: '600'}}>distance</Text>
+              <Text style={{fontSize: 10, fontWeight: '600'}}>Miles</Text>
             </>
           )}
         />
@@ -172,7 +198,7 @@ const Profile = ({AuthStore}) => {
                 }}
               />
 
-              <Text style={{fontSize: 10, fontWeight: '600'}}>calories</Text>
+              <Text style={{fontSize: 10, fontWeight: '600'}}>Calories</Text>
             </>
           )}
         />
@@ -188,7 +214,7 @@ const Profile = ({AuthStore}) => {
                 {state.activeTime}
               </Text>
 
-              <Text style={{fontSize: 10, fontWeight: '600'}}>time</Text>
+              <Text style={{fontSize: 10, fontWeight: '600'}}>Mins</Text>
             </>
           )}
         />
