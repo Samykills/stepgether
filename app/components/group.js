@@ -1,20 +1,26 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {SafeAreaView, Text} from 'react-native';
-import {useFocusEffect} from '@react-navigation/native';
+import {SafeAreaView} from 'react-native';
+import {Button} from 'react-native-elements';
+import {inject} from 'mobx-react';
 
-const Group = () => {
-  useFocusEffect(() => {});
+const Group = ({AuthStore, navigation}) => {
+  const {unSetUserToken, unSetSelectedDeviceToken} = AuthStore;
 
   return (
     <SafeAreaView
       style={{
         flex: 1,
-        justifyContent: 'center',
+        justifyContent: 'space-around',
         alignItems: 'center',
       }}>
-      <Text>Group</Text>
+      <Button
+        title={'Select Device'}
+        onPress={() => navigation.navigate('deviceSelection2')}
+      />
+      <Button title={'Reset Device'} onPress={unSetSelectedDeviceToken} />
+      <Button title={'Logout'} onPress={unSetUserToken} />
     </SafeAreaView>
   );
 };
-export default Group;
+export default inject('AuthStore')(Group);

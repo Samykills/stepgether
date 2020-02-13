@@ -33,6 +33,7 @@ class AuthStore {
           break;
       }
     } catch (e) {
+      console.log(e);
       ErrorStore.setError({showErrorView: true, error: e});
     }
     this.isLoading = false;

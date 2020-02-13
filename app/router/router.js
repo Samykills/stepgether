@@ -1,6 +1,6 @@
 import React from 'react';
 import Group from '../components/group';
-import Feed from '../components/feed';
+import Feed from '../components/feed/feed';
 import Profile from '../components/profile';
 import Splash from '../components/splash';
 import Login from '../components/login';

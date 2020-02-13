@@ -18,15 +18,17 @@ const auth_config = {
 
 export const Fitbit_Init = async () => {
   const fitBitAccessObj = await AuthStore.getFitbitAccessToken();
+  let token = null;
+  // token = await authorize(auth_config);
+
   if (!fitBitAccessObj) {
-    const token = await authorize(auth_config);
-    AuthStore.setFitbitAccessToken(token);
+    token = await authorize(auth_config);
   } else {
-    const token = await refresh(auth_config, {
+    token = await refresh(auth_config, {
       refreshToken: fitBitAccessObj.refreshToken,
     });
-    AuthStore.setFitbitAccessToken(token);
   }
+  AuthStore.setFitbitAccessToken(token);
 };
 
 const fitbitApi = url => {

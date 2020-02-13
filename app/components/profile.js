@@ -11,13 +11,13 @@ import {Apple_GetSteps} from '../healthKits/appleHealthKit';
 import {Fitbit_UserActivity} from '../healthKits/fitbitKit';
 import {inject} from 'mobx-react';
 import {DeviceConstants} from '../constants';
-import AnimateNumber from 'react-native-animate-number';
-import {AnimatedCircularProgress} from 'react-native-circular-progress';
 import {Icon} from 'react-native-elements';
+import AnimatedCircle from './common/animatedCircle';
 
 const FITBIT_ACTIVITY = 'fitbitActivity';
 const APPLE_ACTIVITY = 'appleActivity';
 const REFRESHING = 'refreshing';
+
 const Profile = ({AuthStore}) => {
   const [state, dispatch] = useReducer(
     (state, action) => {
@@ -146,106 +146,63 @@ const Profile = ({AuthStore}) => {
           </Text>
         </View>
       </View>
-      <ScrollView
-        contentContainerStyle={{flex: 1}}
-        refreshControl={
-          <RefreshControl refreshing={state.refreshing} onRefresh={onRefresh} />
-        }>
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: 120,
-          }}>
-          <AnimatedCircularProgress
-            size={100}
-            width={5}
-            fill={(state.steps / state.goalSteps) * 100}
-            tintColor="#1D1C20"
-            backgroundColor="#DCDAE0"
-            children={() => (
-              <>
-                <AnimateNumber
-                  style={{fontSize: 20, fontWeight: '600'}}
-                  value={state.steps}
-                  formatter={val => {
-                    return Math.ceil(val);
-                  }}
-                />
-                <Text>Steps</Text>
-              </>
-            )}
-          />
-        </View>
-        <View
-          style={{
-            justifyContent: 'space-around',
-            alignItems: 'center',
-            flexDirection: 'row',
-            height: 120,
-          }}>
-          <AnimatedCircularProgress
-            size={80}
-            width={5}
-            fill={(state.distance / state.goalDistance) * 100}
-            tintColor="#1D1C20"
-            backgroundColor="#DCDAE0"
-            children={() => (
-              <>
-                <AnimateNumber
-                  style={{fontSize: 12, fontWeight: '600'}}
-                  value={state.distance}
-                  formatter={val => {
-                    return Math.ceil(val);
-                  }}
-                />
+      <View style={{flex: 1}}>
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={state.refreshing}
+              onRefresh={onRefresh}
+            />
+          }>
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: 120,
+            }}>
+            <AnimatedCircle
+              currentValue={state.steps}
+              maxValue={state.goalSteps}
+              textStyle={{fontSize: 20, fontWeight: '600'}}
+              title={'Steps'}
+              size={100}
+            />
+          </View>
+          <View
+            style={{
+              justifyContent: 'space-around',
+              alignItems: 'center',
+              flexDirection: 'row',
+              height: 120,
+            }}>
+            <AnimatedCircle
+              currentValue={state.distance}
+              maxValue={state.goalDistance}
+              textStyle={{fontSize: 12, fontWeight: '600'}}
+              title={'Miles'}
+              size={80}
+            />
+            <AnimatedCircle
+              currentValue={state.caloriesBurned}
+              maxValue={state.goalCaloriesBurned}
+              textStyle={{fontSize: 12, fontWeight: '600'}}
+              title={'Calories'}
+              size={80}
+            />
+            <AnimatedCircle
+              currentValue={state.activeTime}
+              maxValue={state.goalActiveTime}
+              textStyle={{fontSize: 12, fontWeight: '600'}}
+              title={'Mins'}
+              size={80}
+            />
+          </View>
 
-                <Text style={{fontSize: 10, fontWeight: '600'}}>Miles</Text>
-              </>
-            )}
-          />
-          <AnimatedCircularProgress
-            size={80}
-            width={5}
-            fill={(state.caloriesBurned / state.goalCaloriesBurned) * 100}
-            tintColor="#1D1C20"
-            backgroundColor="#DCDAE0"
-            children={() => (
-              <>
-                <AnimateNumber
-                  style={{fontSize: 12, fontWeight: '600'}}
-                  value={state.caloriesBurned}
-                  formatter={val => {
-                    return Math.ceil(val);
-                  }}
-                />
-
-                <Text style={{fontSize: 10, fontWeight: '600'}}>Calories</Text>
-              </>
-            )}
-          />
-          <AnimatedCircularProgress
-            size={80}
-            width={5}
-            fill={(state.activeTime / state.goalActiveTime) * 100}
-            tintColor="#1D1C20"
-            backgroundColor="#DCDAE0"
-            children={() => (
-              <>
-                <Text style={{fontSize: 12, fontWeight: '600'}}>
-                  {state.activeTime}
-                </Text>
-
-                <Text style={{fontSize: 10, fontWeight: '600'}}>Mins</Text>
-              </>
-            )}
-          />
-        </View>
-
-        <View style={{paddingLeft: 30, height: 200, backgroundColor: 'red'}}>
-          <Text>{JSON.stringify(state.activity)}</Text>
-        </View>
-      </ScrollView>
+          <View style={{paddingLeft: 30, height: 200, backgroundColor: 'red'}}>
+            <Text>{JSON.stringify(state.activity)}</Text>
+          </View>
+        </ScrollView>
+      </View>
     </SafeAreaView>
   );
 };
