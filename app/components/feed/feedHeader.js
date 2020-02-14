@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Platform, FlatList, Text} from 'react-native';
+import {View, FlatList, Text} from 'react-native';
 import StepgetherAvatar from '../common/stepgetherAvatar';
 import {Divider} from 'react-native-elements';
 import PropTypes from 'prop-types';
