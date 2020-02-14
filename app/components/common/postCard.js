@@ -1,11 +1,11 @@
 import React from 'react';
-import {Text} from 'react-native';
-import {Card} from 'react-native-elements';
+import {View, Text, Image} from 'react-native';
 import CardTitle from './cardTitle';
 import PropTypes from 'prop-types';
 import PostCardFooter from './postCardFooter';
 const PostCard = ({post}) => {
   const {
+    id,
     name,
     profileImageUrl,
     postedOn,
@@ -16,24 +16,28 @@ const PostCard = ({post}) => {
     likedByUser,
   } = post;
   return (
-    <Card
-      title={
-        <CardTitle
-          name={name}
-          profileImageUrl={profileImageUrl}
-          postedOn={postedOn}
-        />
-      }
-      image={{
-        uri: postImageUrl,
-      }}>
-      <Text style={{marginBottom: 10}}>{postText}</Text>
+    <View style={{flex: 1, backgroundColor: '#FFFFFFFF'}}>
+      <CardTitle
+        name={name}
+        profileImageUrl={profileImageUrl}
+        postedOn={postedOn}
+      />
+      <Image
+        source={{uri: postImageUrl}}
+        style={{height: 350}}
+        resizeMode={'cover'}
+        resizeMethod={'scale'}
+      />
+      <View style={{padding: 10}}>
+        <Text>{postText}</Text>
+      </View>
       <PostCardFooter
+        postId={id}
         likes={likes}
         comments={comments}
         likedByUser={likedByUser}
       />
-    </Card>
+    </View>
   );
 };
 

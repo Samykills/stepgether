@@ -2,9 +2,10 @@ import React, {useReducer} from 'react';
 import {View} from 'react-native';
 import PropTypes from 'prop-types';
 import {Icon, Button} from 'react-native-elements';
-
+import {useNavigation} from '@react-navigation/native';
 const LIKE = 'LIKE';
-const PostCardFooter = ({likes, comments, likedByUser}) => {
+const PostCardFooter = ({postId, likes, comments, likedByUser}) => {
+  const navigation = useNavigation();
   const [state, dispatch] = useReducer(
     (state, action) => {
       switch (action.type) {
@@ -23,6 +24,10 @@ const PostCardFooter = ({likes, comments, likedByUser}) => {
       likedByUser: likedByUser,
     },
   );
+
+  const openCommentsView = () => {
+    navigation.navigate('commentsView', {postId: postId});
+  };
 
   const likeClicked = () => {
     let newLikes = state.likes;
@@ -43,7 +48,6 @@ const PostCardFooter = ({likes, comments, likedByUser}) => {
   return (
     <View
       style={{
-        height: 30,
         flexDirection: 'row',
         flex: 1,
         justifyContent: 'space-around',
@@ -54,40 +58,36 @@ const PostCardFooter = ({likes, comments, likedByUser}) => {
         iconName={state.likedByUser ? 'like1' : 'like2'}
         iconType={'antdesign'}
         iconColor={state.likedByUser ? '#2196F3' : 'grey'}
-        titleColor={'grey'}
         onPress={likeClicked}
       />
       <View style={{width: 1, height: 30, backgroundColor: '#000000FF'}} />
       <FooterIcon
-        value={comments.length}
+        value={comments}
         iconName={'chat'}
         iconType={'material'}
         iconColor={'grey'}
-        titleColor={'grey'}
+        onPress={openCommentsView}
       />
     </View>
   );
 };
 
-const FooterIcon = ({
-  value,
-  iconName,
-  iconType,
-  iconColor,
-  titleColor,
-  onPress,
-}) => (
+const FooterIcon = ({value, iconName, iconType, iconColor, onPress}) => (
   <Button
     icon={<Icon name={iconName} type={iconType} color={iconColor} />}
     iconRight
     title={value + ' '}
-    titleStyle={{color: titleColor}}
+    titleStyle={{color: iconColor}}
     type={'clear'}
     onPress={onPress}
   />
 );
+
 PostCardFooter.proptypes = {
+  postId: PropTypes.number,
   likes: PropTypes.number,
   comments: PropTypes.array,
+  likedByUser: PropTypes.bool,
 };
+
 export default PostCardFooter;

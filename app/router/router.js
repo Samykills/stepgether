@@ -1,10 +1,4 @@
 import React from 'react';
-import Group from '../components/group';
-import Feed from '../components/feed/feed';
-import Profile from '../components/profile';
-import Splash from '../components/splash';
-import Login from '../components/login';
-import DeviceSelection from '../components/deviceSelection';
 import {NavigationNativeContainer} from '@react-navigation/native';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {inject, observer} from 'mobx-react';
@@ -13,6 +7,13 @@ import ErrorView from '../components/error';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import Theme from '../theme/theme';
 import {ThemeProvider} from 'react-native-elements';
+import Group from '../components/group';
+import Feed from '../components/feed/feed';
+import Profile from '../components/profile';
+import Splash from '../components/splash';
+import Login from '../components/login';
+import DeviceSelection from '../components/deviceSelection';
+import CommentsView from '../components/feed/commentsView';
 
 const Tab = createMaterialTopTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -58,6 +59,11 @@ const AppRouter = ({RouterStore, AuthStore, ErrorStore}) => {
                           <Tab.Screen name="Group" component={Group} />
                         </Tab.Navigator>
                       )}
+                    />
+                    <Stack.Screen
+                      name="commentsView"
+                      component={CommentsView}
+                      options={{headerShown: false}}
                     />
                     <Stack.Screen
                       name="deviceSelection2"
