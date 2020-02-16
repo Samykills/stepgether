@@ -21,6 +21,7 @@ const StepgetherAvatar = ({
       title={initials}
       onEditPress={onEditPress}
       showEditButton={showEditButton}
+      onPress={onPress}
     />
   ) : (
     <Avatar
@@ -29,6 +30,7 @@ const StepgetherAvatar = ({
       title={initials}
       onEditPress={onEditPress}
       showEditButton={showEditButton}
+      onPress={onPress}
     />
   );
 };

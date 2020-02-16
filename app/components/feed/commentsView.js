@@ -1,6 +1,6 @@
 import React from 'react';
 import {SafeAreaView, FlatList} from 'react-native';
-import {View, Text} from 'react-native';
+import {Text} from 'react-native';
 import CommentsData from './commentsData';
 import PropTypes from 'prop-types';
 import {useNavigation, useRoute} from '@react-navigation/native';
@@ -11,7 +11,6 @@ const CommentsView = () => {
   const params = useRoute().params;
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
-      <Text style={{padding: 10, fontSize: 16}}>Comments</Text>
       <FlatList
         data={CommentsData}
         renderItem={({item}) => {

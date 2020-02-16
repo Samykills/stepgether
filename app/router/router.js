@@ -63,7 +63,7 @@ const AppRouter = ({RouterStore, AuthStore, ErrorStore}) => {
                     <Stack.Screen
                       name="commentsView"
                       component={CommentsView}
-                      options={{headerShown: false}}
+                      options={{title: 'Comments'}}
                     />
                     <Stack.Screen
                       name="deviceSelection2"
