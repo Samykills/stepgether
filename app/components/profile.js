@@ -13,12 +13,14 @@ import {inject} from 'mobx-react';
 import {DeviceConstants} from '../constants';
 import {Icon} from 'react-native-elements';
 import AnimatedCircle from './common/animatedCircle';
+import {useNavigation} from '@react-navigation/native';
 
 const FITBIT_ACTIVITY = 'fitbitActivity';
 const APPLE_ACTIVITY = 'appleActivity';
 const REFRESHING = 'refreshing';
 
 const Profile = ({AuthStore}) => {
+  const navigation = useNavigation();
   const [state, dispatch] = useReducer(
     (state, action) => {
       switch (action.type) {
@@ -145,6 +147,12 @@ const Profile = ({AuthStore}) => {
               : state.selectedDate.toISOString().split('T')[0]}
           </Text>
         </View>
+        <Icon
+          name="settings"
+          type="MaterialIcons"
+          color="#517fa4"
+          onPress={() => navigation.navigate('settingsView')}
+        />
       </View>
       <View style={{flex: 1}}>
         <ScrollView

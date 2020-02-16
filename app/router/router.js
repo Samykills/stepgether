@@ -14,6 +14,7 @@ import Splash from '../components/splash';
 import Login from '../components/login';
 import DeviceSelection from '../components/deviceSelection';
 import CommentsView from '../components/feed/commentsView';
+import SettingsView from '../components/settingsView';
 
 const Tab = createMaterialTopTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -69,6 +70,11 @@ const AppRouter = ({RouterStore, AuthStore, ErrorStore}) => {
                       name="deviceSelection2"
                       component={DeviceSelection}
                       options={{headerTitle: 'Select Device'}}
+                    />
+                    <Stack.Screen
+                      name="settingsView"
+                      component={SettingsView}
+                      options={{title: 'Settings'}}
                     />
                   </>
                 ) : (
