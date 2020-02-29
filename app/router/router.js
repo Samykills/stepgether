@@ -1,8 +1,9 @@
 import React from 'react';
-import {NavigationNativeContainer} from '@react-navigation/native';
+import {SafeAreaView} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {inject, observer} from 'mobx-react';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import ErrorView from '../components/error';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import Theme from '../theme/theme';
@@ -15,8 +16,11 @@ import Login from '../components/login';
 import DeviceSelection from '../components/deviceSelection';
 import CommentsView from '../components/feed/commentsView';
 import SettingsView from '../components/settingsView';
+import FriendsView from '../components/friendsView/friendsView';
+import FriendsProfile from '../components/friendsView/friendsProfile';
 
-const Tab = createMaterialTopTabNavigator();
+const BottomTabs = createMaterialTopTabNavigator();
+const TopTabs = createMaterialTopTabNavigator();
 const Stack = createNativeStackNavigator();
 
 const AppRouter = ({RouterStore, AuthStore, ErrorStore}) => {
@@ -26,7 +30,7 @@ const AppRouter = ({RouterStore, AuthStore, ErrorStore}) => {
   return (
     <SafeAreaProvider>
       <ThemeProvider theme={Theme}>
-        <NavigationNativeContainer
+        <NavigationContainer
           onStateChange={state => RouterStore.setRouterState(state)}
           ref={navigatorRef => RouterStore.setRouterRef(navigatorRef)}>
           {showErrorView ? (
@@ -51,15 +55,41 @@ const AppRouter = ({RouterStore, AuthStore, ErrorStore}) => {
                     <Stack.Screen
                       name="home"
                       options={{headerShown: false}}
-                      component={() => (
-                        <Tab.Navigator
-                          initialRouteName="Profile"
-                          tabBarPosition={'bottom'}>
-                          <Tab.Screen name="Feed" component={Feed} />
-                          <Tab.Screen name="Profile" component={Profile} />
-                          <Tab.Screen name="Group" component={Group} />
-                        </Tab.Navigator>
+                      children={() => (
+                        <SafeAreaView style={{flex: 1}}>
+                          <BottomTabs.Navigator
+                            initialRouteName="Profile"
+                            tabBarPosition={'bottom'}>
+                            <BottomTabs.Screen name="Feed" component={Feed} />
+                            <BottomTabs.Screen
+                              name="Profile"
+                              component={Profile}
+                            />
+                            <BottomTabs.Screen
+                              name="Community"
+                              children={() => (
+                                <SafeAreaView style={{flex: 1}}>
+                                  <TopTabs.Navigator>
+                                    <TopTabs.Screen
+                                      name="Friends"
+                                      component={FriendsView}
+                                    />
+                                    <TopTabs.Screen
+                                      name="Groups"
+                                      component={Group}
+                                    />
+                                  </TopTabs.Navigator>
+                                </SafeAreaView>
+                              )}
+                            />
+                          </BottomTabs.Navigator>
+                        </SafeAreaView>
                       )}
+                    />
+                    <Stack.Screen
+                      name="socialProfile"
+                      component={FriendsProfile}
+                      options={{headerShown: false}}
                     />
                     <Stack.Screen
                       name="commentsView"
@@ -89,7 +119,7 @@ const AppRouter = ({RouterStore, AuthStore, ErrorStore}) => {
               )}
             </Stack.Navigator>
           )}
-        </NavigationNativeContainer>
+        </NavigationContainer>
       </ThemeProvider>
     </SafeAreaProvider>
   );

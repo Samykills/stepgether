@@ -1,7 +1,7 @@
 const Data = {
   userName: 'Ullas Gupta',
   userImageUrl:
-    'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jp',
+    'https://upload.wikimedia.org/wikipedia/it/thumb/f/ff/Vegeta_-_Dragon_Ball_Kai.png/1200px-Vegeta_-_Dragon_Ball_Kai.png',
   userStories: [
     {
       userId: 1,

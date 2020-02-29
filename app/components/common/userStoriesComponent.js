@@ -32,6 +32,7 @@ const UserStoriesComponent = ({story}) => {
               avatarType={story.userImageUrl}
               size={50}
               onPress={onPressUserStory}
+              title={story.userName}
             />
           )}
         />

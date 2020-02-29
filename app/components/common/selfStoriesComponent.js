@@ -18,6 +18,7 @@ const SelfStoryComponent = ({story}) => {
         <StepgetherAvatar
           avatarType={story.userImageUrl}
           size={55}
+          title={story.userName}
           onEditPress={() => alert('story')}
         />
         <Text style={{marginTop: 10, fontSize: 12}}>{story.userName}</Text>

@@ -7,8 +7,9 @@ const StepgetherAvatar = ({
   size = 100,
   onEditPress,
   editIcon,
+  title,
 }) => {
-  let initials = avatarType.match(/\b\w/g) || [];
+  let initials = title.match(/\b\w/g) || [];
   initials = ((initials.shift() || '') + (initials.pop() || '')).toUpperCase();
   let showEditButton = onEditPress || editIcon ? true : false;
   return avatarType.includes('http') ? (
@@ -18,7 +19,6 @@ const StepgetherAvatar = ({
       source={{
         uri: avatarType,
       }}
-      title={initials}
       onEditPress={onEditPress}
       showEditButton={showEditButton}
       onPress={onPress}
@@ -35,8 +35,9 @@ const StepgetherAvatar = ({
   );
 };
 StepgetherAvatar.propTypes = {
-  avatarType: PropTypes.string.isRequired,
+  avatarType: PropTypes.string,
   onPress: PropTypes.func,
   size: PropTypes.number,
+  title: PropTypes.string.isRequired,
 };
 export default StepgetherAvatar;
