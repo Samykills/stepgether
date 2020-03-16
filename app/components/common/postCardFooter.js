@@ -1,5 +1,5 @@
 import React, {useReducer} from 'react';
-import {View} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
 import {Icon, Button} from 'react-native-elements';
 import {useNavigation} from '@react-navigation/native';
@@ -7,11 +7,11 @@ const LIKE = 'LIKE';
 const PostCardFooter = ({postId, likes, comments, likedByUser}) => {
   const navigation = useNavigation();
   const [state, dispatch] = useReducer(
-    (state, action) => {
+    (oldState, action) => {
       switch (action.type) {
         case LIKE:
           return {
-            ...state,
+            ...oldState,
             likes: action.payload.like,
             likedByUser: action.payload.likedByUser,
           };
@@ -46,13 +46,7 @@ const PostCardFooter = ({postId, likes, comments, likedByUser}) => {
   };
 
   return (
-    <View
-      style={{
-        flexDirection: 'row',
-        flex: 1,
-        justifyContent: 'space-around',
-        alignItems: 'center',
-      }}>
+    <View style={[styles.container]}>
       <FooterIcon
         value={state.likes}
         iconName={state.likedByUser ? 'like1' : 'like2'}
@@ -60,7 +54,7 @@ const PostCardFooter = ({postId, likes, comments, likedByUser}) => {
         iconColor={state.likedByUser ? '#2196F3' : 'grey'}
         onPress={likeClicked}
       />
-      <View style={{width: 1, height: 30, backgroundColor: '#000000FF'}} />
+      <View style={[styles.divider]} />
       <FooterIcon
         value={comments}
         iconName={'chat'}
@@ -82,6 +76,20 @@ const FooterIcon = ({value, iconName, iconType, iconColor, onPress}) => (
     onPress={onPress}
   />
 );
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    flex: 1,
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  divider: {
+    width: 1,
+    height: 30,
+    backgroundColor: '#000000FF',
+  },
+});
 
 PostCardFooter.proptypes = {
   postId: PropTypes.number,

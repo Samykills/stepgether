@@ -1,12 +1,12 @@
 import React from 'react';
-import {View, Button} from 'react-native';
+import {View, Button, StyleSheet} from 'react-native';
 import {inject} from 'mobx-react';
 
 const Login = ({AuthStore}) => {
   const {setUserToken} = AuthStore;
 
   return (
-    <View style={{flex: 1}}>
+    <View style={[styles.container]}>
       <Button
         title="Login via Google"
         onPress={() => {
@@ -16,5 +16,9 @@ const Login = ({AuthStore}) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {flex: 1},
+});
 
 export default inject('AuthStore')(Login);

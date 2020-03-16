@@ -17,12 +17,12 @@ export const Apple_GetSteps = () => {
       console.log('error initializing Healthkit: ', err);
       return;
     }
-    AppleHealthKit.getStepCount({}, (err, results) => {
-      if (err) {
-        alert('error:' + err);
+    AppleHealthKit.getStepCount({}, (error, countResults) => {
+      if (error) {
+        alert('error:' + error);
         return;
       }
-      alert(`Steps for current day :${results.value}`);
+      alert(`Steps for current day :${countResults.value}`);
     });
   });
 };

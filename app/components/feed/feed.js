@@ -1,14 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {SafeAreaView, FlatList, View} from 'react-native';
-import {inject} from 'mobx-react';
 import FeedHeader from './feedHeader';
 import Data from './apiData';
 import PostCard from '../common/postCard';
 
-const Feed = ({AuthStore, navigation}) => {
-  const {unSetUserToken, unSetSelectedDeviceToken} = AuthStore;
-
+const Feed = () => {
   return (
     <SafeAreaView
       style={{
@@ -28,4 +25,4 @@ const Feed = ({AuthStore, navigation}) => {
     </SafeAreaView>
   );
 };
-export default inject('AuthStore')(Feed);
+export default Feed;

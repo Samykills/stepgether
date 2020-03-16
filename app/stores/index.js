@@ -4,6 +4,6 @@ import ErrorStore from './errorStore';
 const Store = {
   RouterStore,
   AuthStore,
-  ErrorStore
+  ErrorStore,
 };
 export default Store;

@@ -1,5 +1,5 @@
 import React from 'react';
-import {View} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {Button} from 'react-native-elements';
 import {inject} from 'mobx-react';
 import {Fitbit_Init} from '../healthKits/fitbitKit';
@@ -12,8 +12,7 @@ const DeviceSelection = ({AuthStore}) => {
   };
 
   return (
-    <View
-      style={{flex: 1, justifyContent: 'space-around', alignItems: 'center'}}>
+    <View style={[styles.container]}>
       <Button
         title={'FitBit'}
         accessibilityLabel={'Fitbit'}
@@ -29,5 +28,7 @@ const DeviceSelection = ({AuthStore}) => {
     </View>
   );
 };
-
+const styles = StyleSheet.create({
+  container: {flex: 1, justifyContent: 'space-around', alignItems: 'center'},
+});
 export default inject('AuthStore')(DeviceSelection);

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import StepgetherAvatar from './stepgetherAvatar';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
 
@@ -11,17 +11,8 @@ const UserStoriesComponent = ({story}) => {
     }
   };
   return (
-    <View
-      style={{
-        flexDirection: 'row',
-        flex: 1,
-      }}>
-      <View
-        style={{
-          justifyContent: 'center',
-          alignItems: 'center',
-          width: 90,
-        }}>
+    <View style={[styles.container]}>
+      <View style={[styles.subContainer]}>
         <AnimatedCircularProgress
           size={60}
           width={1}
@@ -37,7 +28,7 @@ const UserStoriesComponent = ({story}) => {
           )}
         />
         <Text
-          style={{marginTop: 10, fontSize: 12}}
+          style={[styles.textStyle]}
           ellipsizeMode={'tail'}
           numberOfLines={1}>
           {story.userName}
@@ -46,4 +37,17 @@ const UserStoriesComponent = ({story}) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    flex: 1,
+  },
+  subContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 90,
+  },
+  textStyle: {marginTop: 10, fontSize: 12},
+});
 export default UserStoriesComponent;

@@ -1,30 +1,33 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import StepgetherAvatar from './stepgetherAvatar';
 
 const SelfStoryComponent = ({story}) => {
   return (
-    <View
-      style={{
-        flexDirection: 'row',
-        flex: 1,
-      }}>
-      <View
-        style={{
-          justifyContent: 'center',
-          alignItems: 'center',
-          width: 100,
-        }}>
+    <View style={[styles.container]}>
+      <View style={[styles.subContainer]}>
         <StepgetherAvatar
           avatarType={story.userImageUrl}
           size={55}
           title={story.userName}
           onEditPress={() => alert('story')}
         />
-        <Text style={{marginTop: 10, fontSize: 12}}>{story.userName}</Text>
+        <Text style={[styles.textStyle]}>{story.userName}</Text>
       </View>
     </View>
   );
 };
 
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    flex: 1,
+  },
+  subContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 100,
+  },
+  textStyle: {marginTop: 10, fontSize: 12},
+});
 export default SelfStoryComponent;

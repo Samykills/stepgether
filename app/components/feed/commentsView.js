@@ -1,16 +1,13 @@
 import React from 'react';
-import {SafeAreaView, FlatList} from 'react-native';
+import {SafeAreaView, FlatList, StyleSheet} from 'react-native';
 import {Text} from 'react-native';
 import CommentsData from './commentsData';
 import PropTypes from 'prop-types';
-import {useNavigation, useRoute} from '@react-navigation/native';
 import {ListItem} from 'react-native-elements';
 
 const CommentsView = () => {
-  const navigation = useNavigation();
-  const params = useRoute().params;
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
+    <SafeAreaView style={[styles.container]}>
       <FlatList
         data={CommentsData}
         renderItem={({item}) => {
@@ -19,12 +16,7 @@ const CommentsView = () => {
               leftAvatar={{source: {uri: item.postedByUserProfileImage}}}
               title={item.postedBy}
               subtitle={item.createdDateTime}
-              bottomDivider
-              // children={() => {
-              //   debugger;
-              //   return ;
-              // }}
-            >
+              bottomDivider>
               <Text>{item.commentBody}</Text>
             </ListItem>
           ) : (
@@ -34,13 +26,12 @@ const CommentsView = () => {
               subtitle={item.createdDateTime}
               bottomDivider
               children={() => {
-                debugger;
                 return <Text>{item.commentBody}</Text>;
               }}
             />
           );
         }}
-        keyExtractor={(item, index) => item.id}
+        keyExtractor={item => item.id}
       />
     </SafeAreaView>
   );
@@ -49,4 +40,8 @@ const CommentsView = () => {
 CommentsView.propTypes = {
   postId: PropTypes.number,
 };
+
+const styles = StyleSheet.create({
+  container: {flex: 1, backgroundColor: 'white'},
+});
 export default CommentsView;

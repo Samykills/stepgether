@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, FlatList} from 'react-native';
+import {View, FlatList, StyleSheet} from 'react-native';
 import {Divider} from 'react-native-elements';
 import PropTypes from 'prop-types';
 import SelfStoryComponent from '../common/selfStoriesComponent';
@@ -12,11 +12,7 @@ const FeedHeader = ({userDetails, userStories}) => {
     userName: 'Your Story',
   };
   return (
-    <View
-      style={{
-        height: 100,
-        backgroundColor: 'white',
-      }}>
+    <View style={[styles.container]}>
       <FlatList
         showsHorizontalScrollIndicator={false}
         horizontal={true}
@@ -26,7 +22,7 @@ const FeedHeader = ({userDetails, userStories}) => {
         keyExtractor={item => item.userId.toString()}
         removeClippedSubviews={true}
       />
-      <Divider style={{backgroundColor: '#000000FF'}} />
+      <Divider style={[styles.divider]} />
     </View>
   );
 };
@@ -35,5 +31,11 @@ FeedHeader.propTypes = {
   userDetails: PropTypes.object,
   userStories: PropTypes.array,
 };
-
+const styles = StyleSheet.create({
+  container: {
+    height: 100,
+    backgroundColor: 'white',
+  },
+  divider: {backgroundColor: '#000000FF'},
+});
 export default FeedHeader;

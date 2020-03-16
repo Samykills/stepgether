@@ -1,5 +1,5 @@
 import React from 'react';
-import {SafeAreaView} from 'react-native';
+import {SafeAreaView, StyleSheet} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
@@ -56,7 +56,7 @@ const AppRouter = ({RouterStore, AuthStore, ErrorStore}) => {
                       name="home"
                       options={{headerShown: false}}
                       children={() => (
-                        <SafeAreaView style={{flex: 1}}>
+                        <SafeAreaView style={[styles.container]}>
                           <BottomTabs.Navigator
                             initialRouteName="Profile"
                             tabBarPosition={'bottom'}>
@@ -68,7 +68,7 @@ const AppRouter = ({RouterStore, AuthStore, ErrorStore}) => {
                             <BottomTabs.Screen
                               name="Community"
                               children={() => (
-                                <SafeAreaView style={{flex: 1}}>
+                                <SafeAreaView style={[styles.container]}>
                                   <TopTabs.Navigator>
                                     <TopTabs.Screen
                                       name="Friends"
@@ -124,7 +124,11 @@ const AppRouter = ({RouterStore, AuthStore, ErrorStore}) => {
     </SafeAreaProvider>
   );
 };
-
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
 export default inject(
   'AuthStore',
   'RouterStore',

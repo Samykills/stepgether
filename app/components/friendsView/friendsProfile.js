@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, ActivityIndicator, SafeAreaView, Text} from 'react-native';
+import {View, ActivityIndicator, SafeAreaView, StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
 import SocialProfile from './profile/socialProfile';
 const FriendsProfile = ({userId}) => {
@@ -9,19 +9,19 @@ const FriendsProfile = ({userId}) => {
     fetchUserProfileViaId(userId).then(res => {
       setUserProfile(res);
     });
-  }, []);
+  }, [userId]);
 
   const element = () => {
     return Object.entries(userProfile).length > 0 ? (
       <SocialProfile userProfile={userProfile} />
     ) : (
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <View style={[styles.loaderContainer]}>
         <ActivityIndicator size="large" color="#0000ff" />
       </View>
     );
   };
 
-  return <SafeAreaView style={{flex: 1}}>{element()}</SafeAreaView>;
+  return <SafeAreaView style={[styles.container]}>{element()}</SafeAreaView>;
 };
 
 const fetchUserProfileViaId = userId => {
@@ -31,6 +31,12 @@ const fetchUserProfileViaId = userId => {
     }, 2000);
   });
 };
+
+const styles = StyleSheet.create({
+  container: {flex: 1},
+  loaderContainer: {flex: 1, justifyContent: 'center', alignItems: 'center'},
+});
+
 const UserProfileData = {
   name: 'Warren Buffett',
   aboutMe: 'Your life is your message to the world, make sure its inspiring!!',

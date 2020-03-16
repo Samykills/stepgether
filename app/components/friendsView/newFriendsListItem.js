@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import {Divider, Button} from 'react-native-elements';
 import StepgetherAvatar from '../common/stepgetherAvatar';
 import PropTypes from 'prop-types';
@@ -11,31 +11,19 @@ const NewFriendsListItem = ({friendInfo}) => {
   return (
     <>
       <Divider />
-      <View
-        style={{
-          height: 80,
-          padding: 10,
-          alignItems: 'center',
-          flexDirection: 'row',
-        }}>
+      <View style={[styles.container]}>
         <StepgetherAvatar
           avatarType={friendInfo.imageUrl}
           title={friendInfo.name}
           size={60}
           onPress={openProfile}
         />
-        <View style={{flex: 1, padding: 10}}>
+        <View style={[styles.name]}>
           <Text numberOfLines={1} ellipsizeMode={'tail'}>
             {friendInfo.name}
           </Text>
         </View>
-        <View
-          style={{
-            flex: 1,
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-around',
-          }}>
+        <View style={[styles.options]}>
           <Button title="Accept" />
           <Button title="Reject" type="outline" />
         </View>
@@ -44,6 +32,22 @@ const NewFriendsListItem = ({friendInfo}) => {
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    height: 80,
+    padding: 10,
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  name: {flex: 1, padding: 10},
+  options: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+  },
+});
 
 NewFriendsListItem.propTypes = {
   friendInfo: PropTypes.object,

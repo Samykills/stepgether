@@ -1,4 +1,4 @@
-import React, {useReducer, useEffect, useCallback} from 'react';
+import React, {useReducer, useEffect} from 'react';
 import {
   View,
   SafeAreaView,
@@ -6,6 +6,7 @@ import {
   Text,
   ScrollView,
   RefreshControl,
+  StyleSheet,
 } from 'react-native';
 import {Apple_GetSteps} from '../healthKits/appleHealthKit';
 import {Fitbit_UserActivity} from '../healthKits/fitbitKit';
@@ -22,11 +23,11 @@ const REFRESHING = 'refreshing';
 const Profile = ({AuthStore}) => {
   const navigation = useNavigation();
   const [state, dispatch] = useReducer(
-    (state, action) => {
+    (oldState, action) => {
       switch (action.type) {
         case FITBIT_ACTIVITY:
           return {
-            ...state,
+            ...oldState,
             activity: action.payload.fitBitActivity,
             steps: action.payload.fitBitActivity.summary.steps,
             caloriesBurned: action.payload.fitBitActivity.summary.caloriesOut,
@@ -40,9 +41,9 @@ const Profile = ({AuthStore}) => {
             refreshing: false,
           };
         case APPLE_ACTIVITY:
-          return {...state};
+          return {...oldState};
         case REFRESHING:
-          return {...state};
+          return {...oldState};
         default:
           throw new Error();
       }
@@ -66,7 +67,7 @@ const Profile = ({AuthStore}) => {
 
   useEffect(() => {
     getActivity(new Date());
-  }, []);
+  });
 
   const getActivity = date => {
     switch (selectedDeviceToken) {
@@ -74,7 +75,7 @@ const Profile = ({AuthStore}) => {
         fitBitActivity(date);
         break;
       case DeviceConstants.DEVICE_APPLE_WATCH:
-        Platform.OS == 'ios' ? Apple_GetSteps() : null;
+        Platform.OS === 'ios' ? Apple_GetSteps() : null;
         break;
       default:
         break;
@@ -82,22 +83,22 @@ const Profile = ({AuthStore}) => {
   };
 
   const fitBitActivity = async date => {
-    const fitBitActivity = await Fitbit_UserActivity(date);
-    const fairlyActiveMinutes = fitBitActivity.summary.fairlyActiveMinutes,
-      lightlyActiveMinutes = fitBitActivity.summary.lightlyActiveMinutes,
-      veryActiveMinutes = fitBitActivity.summary.veryActiveMinutes;
+    const fitBitActivityRes = await Fitbit_UserActivity(date);
+    const fairlyActiveMinutes = fitBitActivityRes.summary.fairlyActiveMinutes,
+      lightlyActiveMinutes = fitBitActivityRes.summary.lightlyActiveMinutes,
+      veryActiveMinutes = fitBitActivityRes.summary.veryActiveMinutes;
 
     const totalTimeActive =
       fairlyActiveMinutes + lightlyActiveMinutes + veryActiveMinutes;
 
     let distance = 0;
-    fitBitActivity.summary.distances.map(dist => {
+    fitBitActivityRes.summary.distances.map(dist => {
       distance = distance + dist.distance;
     });
     dispatch({
       type: FITBIT_ACTIVITY,
       payload: {
-        fitBitActivity: fitBitActivity,
+        fitBitActivity: fitBitActivityRes,
         totalTimeActive: totalTimeActive,
         distance: distance,
         selectedDate: date,
@@ -111,38 +112,23 @@ const Profile = ({AuthStore}) => {
     getActivity(newDate);
   };
 
-  const onRefresh = useCallback(() => {
+  const onPullDownRefresh = () => {
     dispatch({type: REFRESHING});
     getActivity(new Date());
-  });
+  };
 
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        backgroundColor: '#FFF',
-      }}>
-      <View
-        style={{
-          padding: 20,
-          flexDirection: 'row',
-          alginItems: 'center',
-        }}>
+    <SafeAreaView style={[styles.container]}>
+      <View style={[styles.header]}>
         <Icon
           name="keyboard-arrow-left"
           type="MaterialIcons"
           color="#517fa4"
           onPress={() => onBackPress()}
         />
-        <View
-          style={{
-            flex: 1,
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
+        <View style={[styles.headerTextView]}>
           <Text>
-            {state.selectedDate.getDate() == new Date().getDate()
+            {state.selectedDate.getDate() === new Date().getDate()
               ? 'Today'
               : state.selectedDate.toISOString().split('T')[0]}
           </Text>
@@ -154,59 +140,48 @@ const Profile = ({AuthStore}) => {
           onPress={() => navigation.navigate('settingsView')}
         />
       </View>
-      <View style={{flex: 1}}>
+      <View style={[styles.content]}>
         <ScrollView
           refreshControl={
             <RefreshControl
               refreshing={state.refreshing}
-              onRefresh={onRefresh}
+              onRefresh={onPullDownRefresh}
             />
           }>
-          <View
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              height: 120,
-            }}>
+          <View style={[styles.mainCircle]}>
             <AnimatedCircle
               currentValue={state.steps}
               maxValue={state.goalSteps}
-              textStyle={{fontSize: 20, fontWeight: '600'}}
+              textStyle={[styles.mainCircleTextStyle]}
               title={'Steps'}
               size={100}
             />
           </View>
-          <View
-            style={{
-              justifyContent: 'space-around',
-              alignItems: 'center',
-              flexDirection: 'row',
-              height: 120,
-            }}>
+          <View style={[styles.subCircle]}>
             <AnimatedCircle
               currentValue={state.distance}
               maxValue={state.goalDistance}
-              textStyle={{fontSize: 12, fontWeight: '600'}}
+              textStyle={[styles.subCircleTextStyle]}
               title={'Miles'}
               size={80}
             />
             <AnimatedCircle
               currentValue={state.caloriesBurned}
               maxValue={state.goalCaloriesBurned}
-              textStyle={{fontSize: 12, fontWeight: '600'}}
+              textStyle={[styles.subCircleTextStyle]}
               title={'Calories'}
               size={80}
             />
             <AnimatedCircle
               currentValue={state.activeTime}
               maxValue={state.goalActiveTime}
-              textStyle={{fontSize: 12, fontWeight: '600'}}
+              textStyle={[styles.subCircleTextStyle]}
               title={'Mins'}
               size={80}
             />
           </View>
 
-          <View style={{paddingLeft: 30, height: 200, backgroundColor: 'red'}}>
+          <View style={[styles.activity]}>
             <Text>{JSON.stringify(state.activity)}</Text>
           </View>
         </ScrollView>
@@ -214,4 +189,40 @@ const Profile = ({AuthStore}) => {
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {flex: 1, backgroundColor: '#FFF'},
+  header: {
+    padding: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  headerTextView: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  content: {flex: 1},
+  mainCircle: {justifyContent: 'center', alignItems: 'center', height: 120},
+  mainCircleTextStyle: {
+    fontSize: 20,
+    fontWeight: '600',
+  },
+  subCircle: {
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    flexDirection: 'row',
+    height: 120,
+  },
+  subCircleTextStyle: {
+    fontSize: 12,
+    fontWeight: '600',
+  },
+  activity: {
+    paddingLeft: 30,
+    height: 200,
+    backgroundColor: 'red',
+  },
+});
 export default inject('AuthStore')(Profile);

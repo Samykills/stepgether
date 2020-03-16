@@ -1,18 +1,23 @@
 import React from 'react';
-import {View} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import FriendsHeader from './friendsHeader';
 import FriendsNewRequest from './friendsNewRequest';
 import FriendsList from './friendsList';
 
 const FriendsView = () => {
   return (
-    <View style={{flex: 1, backgroundColor: 'white'}}>
+    <View style={[styles.container]}>
       <FriendsHeader />
       <FriendsNewRequest newFriendRequestList={Data.newFriendRequests} />
       <FriendsList friendsList={Data.friendsList} />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {flex: 1, backgroundColor: 'white'},
+});
+
 export default FriendsView;
 
 const Data = {

@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, Image} from 'react-native';
+import {View, Text, Image, StyleSheet} from 'react-native';
 import CardTitle from './cardTitle';
 import PropTypes from 'prop-types';
 import PostCardFooter from './postCardFooter';
@@ -16,7 +16,7 @@ const PostCard = ({post}) => {
     likedByUser,
   } = post;
   return (
-    <View style={{flex: 1, backgroundColor: '#FFFFFFFF'}}>
+    <View style={[styles.container]}>
       <CardTitle
         name={name}
         profileImageUrl={profileImageUrl}
@@ -24,11 +24,11 @@ const PostCard = ({post}) => {
       />
       <Image
         source={{uri: postImageUrl}}
-        style={{height: 350}}
+        style={[styles.imageStyle]}
         resizeMode={'cover'}
         resizeMethod={'scale'}
       />
-      <View style={{padding: 10}}>
+      <View style={[styles.textViewStyle]}>
         <Text>{postText}</Text>
       </View>
       <PostCardFooter
@@ -40,7 +40,11 @@ const PostCard = ({post}) => {
     </View>
   );
 };
-
+const styles = StyleSheet.create({
+  container: {flex: 1, backgroundColor: '#FFFFFFFF'},
+  imageStyle: {height: 350},
+  textViewStyle: {padding: 10},
+});
 PostCard.propTypes = {
   post: PropTypes.object,
 };

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Platform} from 'react-native';
+import {Platform} from 'react-native';
 import {SearchBar} from 'react-native-elements';
 const FriendsHeader = () => {
   const [searchText, setSearchText] = useState('');

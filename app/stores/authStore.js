@@ -7,7 +7,7 @@ class AuthStore {
   @observable userToken;
   @observable selectedDeviceToken;
   @observable isLoading = true; //only use it for appRouter.js
-  fitbitApiAccessToken='';
+  fitbitApiAccessToken = '';
 
   constructor() {
     this.loadDataFromStorage();
