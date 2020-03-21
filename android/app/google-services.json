@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "90934680332-e2sorvnrfg8b922qt1m6avgvc6uho9ia.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.stepgether",
+            "certificate_hash": "f088277ad02a02135a0cf8d63b980ee1e1a056cb"
+          }
+        },
+        {
           "client_id": "90934680332-bg1al4pc5cvlf3sggluegj1082ga4tfa.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -38,6 +46,13 @@
             {
               "client_id": "90934680332-0qqllq8g7j3tl53tkq4r70kg9d217fnl.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "90934680332-s67es9k3n3a7m995p71a8n2nv1m9tfpg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.stepgether"
+              }
             }
           ]
         }
