@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "90934680332",
+    "firebase_url": "https://stepgether-3a3d9.firebaseio.com",
+    "project_id": "stepgether-3a3d9",
+    "storage_bucket": "stepgether-3a3d9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:90934680332:android:7e54de6a69dddac1160729",
+        "android_client_info": {
+          "package_name": "com.stepgether"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "90934680332-bg1al4pc5cvlf3sggluegj1082ga4tfa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.stepgether",
+            "certificate_hash": "942616f3ad66905c5a5b108da01e531f17f2786d"
+          }
+        },
+        {
+          "client_id": "90934680332-0qqllq8g7j3tl53tkq4r70kg9d217fnl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHexSDWd9FUIbsm75760_flJtnOOY95bw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "90934680332-0qqllq8g7j3tl53tkq4r70kg9d217fnl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

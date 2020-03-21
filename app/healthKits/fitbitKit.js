@@ -22,11 +22,11 @@ export const Fitbit_Init = async () => {
   // token = await authorize(auth_config);
 
   if (!fitBitAccessObj) {
-    token = await authorize(auth_config);
+    // token = await authorize(auth_config);
   } else {
-    token = await refresh(auth_config, {
-      refreshToken: fitBitAccessObj.refreshToken,
-    });
+    // token = await refresh(auth_config, {
+    //   refreshToken: fitBitAccessObj.refreshToken,
+    // });
   }
   AuthStore.setFitbitAccessToken(token);
 };
@@ -58,7 +58,7 @@ export const Fitbit_UserActivity = date => {
 };
 
 export const Fitbit_UserProfile = () => {
-  const url = `https://api.fitbit.com/1/user/$userId/profile.json`;
+  const url = 'https://api.fitbit.com/1/user/$userId/profile.json';
   return fitbitApi(url).then(res => res.json());
 };
 

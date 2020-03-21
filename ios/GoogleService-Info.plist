@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>90934680332-s67es9k3n3a7m995p71a8n2nv1m9tfpg.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.90934680332-s67es9k3n3a7m995p71a8n2nv1m9tfpg</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>90934680332-bg1al4pc5cvlf3sggluegj1082ga4tfa.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCrQ86eayIJRgvULerXdDcu7upOGLx3F6w</string>
+	<key>GCM_SENDER_ID</key>
+	<string>90934680332</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.stepgether</string>
+	<key>PROJECT_ID</key>
+	<string>stepgether-3a3d9</string>
+	<key>STORAGE_BUCKET</key>
+	<string>stepgether-3a3d9.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:90934680332:ios:16917c0d74067b25160729</string>
+	<key>DATABASE_URL</key>
+	<string>https://stepgether-3a3d9.firebaseio.com</string>
+</dict>
+</plist>
