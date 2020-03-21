@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Platform, Text} from 'react-native';
 import {inject} from 'mobx-react';
 import {
   GoogleSignin,
@@ -7,7 +7,7 @@ import {
   statusCodes,
 } from '@react-native-community/google-signin';
 import {firebase} from '@react-native-firebase/auth';
-
+import {AuthConstants} from '../constants';
 const google_SignIn = async () => {
   try {
     await GoogleSignin.hasPlayServices();
@@ -33,8 +33,7 @@ const Login = ({AuthStore}) => {
 
   useEffect(() => {
     GoogleSignin.configure({
-      webClientId:
-        '90934680332-0qqllq8g7j3tl53tkq4r70kg9d217fnl.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)
+      webClientId: AuthConstants.GOOGLE_WEB_CLIENT_ID, // client ID of type WEB for your server (needed to verify user ID and offline access)
     });
   }, []);
 
@@ -54,6 +53,11 @@ const Login = ({AuthStore}) => {
     }
   };
 
+  let appleButton = null;
+  if (Platform.OS == 'ios' && parseInt(Platform.Version) >= '13') {
+    appleButton = <Text>apple</Text>;
+  }
+
   return (
     <View style={[styles.container]}>
       <GoogleSigninButton
@@ -62,6 +66,7 @@ const Login = ({AuthStore}) => {
         onPress={onSignIn}
         disabled={isDisabled}
       />
+      {appleButton}
     </View>
   );
 };
