@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {inject} from 'mobx-react';
 import {
@@ -7,11 +7,6 @@ import {
   statusCodes,
 } from '@react-native-community/google-signin';
 import {firebase} from '@react-native-firebase/auth';
-
-GoogleSignin.configure({
-  webClientId:
-    '90934680332-0qqllq8g7j3tl53tkq4r70kg9d217fnl.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)
-});
 
 const google_SignIn = async () => {
   try {
@@ -36,6 +31,13 @@ const Login = ({AuthStore}) => {
   const [isDisabled, setIsDisabled] = useState(false);
   const {setUserToken} = AuthStore;
 
+  useEffect(() => {
+    GoogleSignin.configure({
+      webClientId:
+        '90934680332-0qqllq8g7j3tl53tkq4r70kg9d217fnl.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)
+    });
+  }, []);
+
   const onSignIn = async () => {
     setIsDisabled(true);
     const userInfo = await google_SignIn();
@@ -55,7 +57,6 @@ const Login = ({AuthStore}) => {
   return (
     <View style={[styles.container]}>
       <GoogleSigninButton
-        style={{width: 192, height: 48}}
         size={GoogleSigninButton.Size.Wide}
         color={GoogleSigninButton.Color.Dark}
         onPress={onSignIn}
