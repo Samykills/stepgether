@@ -25,9 +25,6 @@ class AuthStore {
 
   loadDataFromStorage = async () => {
     try {
-      this.userToken = await AsyncStorage.getItem(
-        AuthConstants.USER_SESSION_STORE,
-      );
       this.selectedDeviceToken = await AsyncStorage.getItem(
         AuthConstants.USER_SELECTED_DEVICE,
       );

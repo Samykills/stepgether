@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, StyleSheet, Platform, Text} from 'react-native';
+import {View, StyleSheet, Platform} from 'react-native';
 import {
   GoogleSignin,
   GoogleSigninButton,
@@ -7,7 +7,12 @@ import {
 } from '@react-native-community/google-signin';
 import auth from '@react-native-firebase/auth';
 import {AuthConstants} from '../constants';
-
+import appleAuth, {
+  AppleButton,
+  AppleAuthRequestOperation,
+  AppleAuthRequestScope,
+  AppleAuthError,
+} from '@invertase/react-native-apple-authentication';
 const Login = () => {
   const [isDisabled, setIsDisabled] = useState(false);
 
@@ -17,9 +22,9 @@ const Login = () => {
     });
   }, []);
 
-  const onSignIn = async () => {
+  const onGoogleSignInButtonPress = async () => {
     setIsDisabled(true);
-    const userInfo = await google_SignIn();
+    const userInfo = await googleSignIn();
     if (userInfo) {
       const {idToken, accessToken} = userInfo;
       const credential = auth.GoogleAuthProvider.credential(
@@ -32,29 +37,90 @@ const Login = () => {
     }
   };
 
-  let appleButton = null;
+  const onAppleSignInButtonPress = async () => {
+    setIsDisabled(true);
+    const userInfo = await appleSignIn();
+    if (userInfo) {
+      const {identityToken, nonce} = userInfo;
+      // can be null in some scenarios
+      if (identityToken) {
+        const appleCredential = auth.AppleAuthProvider.credential(
+          identityToken,
+          nonce,
+        );
+        await auth().signInWithCredential(appleCredential);
+      }
+    } else {
+      setIsDisabled(false);
+    }
+  };
+
+  let appleSignInButton = null;
   if (Platform.OS == 'ios' && parseInt(Platform.Version) >= '13') {
-    appleButton = <Text>apple</Text>;
+    appleSignInButton = (
+      <AppleButton
+        style={[styles.appleButton]}
+        buttonStyle={AppleButton.Style.WHITE_OUTLINE}
+        buttonType={AppleButton.Type.SIGN_IN}
+        onPress={onAppleSignInButtonPress}
+        // disabled={isDisabled}
+      />
+    );
   }
 
   return (
     <View style={[styles.container]}>
       <GoogleSigninButton
+        style={[styles.googleButton]}
         size={GoogleSigninButton.Size.Wide}
         color={GoogleSigninButton.Color.Dark}
-        onPress={onSignIn}
+        onPress={onGoogleSignInButtonPress}
         disabled={isDisabled}
       />
-      {appleButton}
+      {appleSignInButton}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {flex: 1, justifyContent: 'center', alignItems: 'center'},
+  appleButton: {
+    width: '80%',
+    height: 45,
+  },
+  googleButton: {
+    width: '80%',
+    height: 50,
+  },
 });
 
-const google_SignIn = async () => {
+const appleSignIn = async () => {
+  // performs login request
+  try {
+    const appleAuthRequestResponse = await appleAuth.performRequest({
+      requestedOperation: AppleAuthRequestOperation.LOGIN,
+      requestedScopes: [
+        AppleAuthRequestScope.EMAIL,
+        AppleAuthRequestScope.FULL_NAME,
+      ],
+    });
+    return appleAuthRequestResponse;
+  } catch (error) {
+    if (error.code === AppleAuthError.CANCELED) {
+    }
+    if (error.code === AppleAuthError.FAILED) {
+    }
+    if (error.code === AppleAuthError.INVALID_RESPONSE) {
+    }
+    if (error.code === AppleAuthError.NOT_HANDLED) {
+    }
+    if (error.code === AppleAuthError.UNKNOWN) {
+    }
+    return null;
+  }
+};
+
+const googleSignIn = async () => {
   try {
     await GoogleSignin.hasPlayServices();
     const userInfo = await GoogleSignin.signIn();
