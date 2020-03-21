@@ -1,35 +1,15 @@
 import React, {useState, useEffect} from 'react';
 import {View, StyleSheet, Platform, Text} from 'react-native';
-import {inject} from 'mobx-react';
 import {
   GoogleSignin,
   GoogleSigninButton,
   statusCodes,
 } from '@react-native-community/google-signin';
-import {firebase} from '@react-native-firebase/auth';
+import auth from '@react-native-firebase/auth';
 import {AuthConstants} from '../constants';
-const google_SignIn = async () => {
-  try {
-    await GoogleSignin.hasPlayServices();
-    const userInfo = await GoogleSignin.signIn();
-    return userInfo;
-  } catch (error) {
-    if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-      // user cancelled the login flow
-    } else if (error.code === statusCodes.IN_PROGRESS) {
-      // operation (e.g. sign in) is in progress already
-    } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-      // play services not available or outdated
-    } else {
-      // some other error happened
-    }
-    return null;
-  }
-};
 
-const Login = ({AuthStore}) => {
+const Login = () => {
   const [isDisabled, setIsDisabled] = useState(false);
-  const {setUserToken} = AuthStore;
 
   useEffect(() => {
     GoogleSignin.configure({
@@ -42,12 +22,11 @@ const Login = ({AuthStore}) => {
     const userInfo = await google_SignIn();
     if (userInfo) {
       const {idToken, accessToken} = userInfo;
-      const credential = firebase.auth.GoogleAuthProvider.credential(
+      const credential = auth.GoogleAuthProvider.credential(
         idToken,
         accessToken,
       );
-      const userToken = await firebase.auth().signInWithCredential(credential);
-      setUserToken(JSON.stringify(userToken.user));
+      await auth().signInWithCredential(credential);
     } else {
       setIsDisabled(false);
     }
@@ -75,4 +54,23 @@ const styles = StyleSheet.create({
   container: {flex: 1, justifyContent: 'center', alignItems: 'center'},
 });
 
-export default inject('AuthStore')(Login);
+const google_SignIn = async () => {
+  try {
+    await GoogleSignin.hasPlayServices();
+    const userInfo = await GoogleSignin.signIn();
+    return userInfo;
+  } catch (error) {
+    if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+      // user cancelled the login flow
+    } else if (error.code === statusCodes.IN_PROGRESS) {
+      // operation (e.g. sign in) is in progress already
+    } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+      // play services not available or outdated
+    } else {
+      // some other error happened
+    }
+    return null;
+  }
+};
+
+export default Login;

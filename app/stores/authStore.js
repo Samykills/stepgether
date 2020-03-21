@@ -3,11 +3,21 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {AuthConstants, FitbitConstants, DeviceConstants} from '../constants';
 import ErrorStore from './errorStore';
 import {Fitbit_Init} from '../healthKits/fitbitKit';
+import auth from '@react-native-firebase/auth';
+
 class AuthStore {
   @observable userToken;
   @observable selectedDeviceToken;
   @observable isLoading = true; //only use it for appRouter.js
   fitbitApiAccessToken = '';
+
+  unSubscribeUser = auth().onAuthStateChanged(user => {
+    if (user) {
+      this.userToken = true;
+    } else {
+      this.userToken = false;
+    }
+  });
 
   constructor() {
     this.loadDataFromStorage();
@@ -39,19 +49,13 @@ class AuthStore {
     this.isLoading = false;
   };
 
-  @action setUserToken = token => {
-    this.userToken = token;
-    AsyncStorage.setItem(AuthConstants.USER_SESSION_STORE, token);
-  };
-
   @action setSelectedDeviceToken = deviceType => {
     this.selectedDeviceToken = deviceType;
     AsyncStorage.setItem(AuthConstants.USER_SELECTED_DEVICE, deviceType);
   };
 
-  @action unSetUserToken = () => {
-    this.userToken = undefined;
-    AsyncStorage.removeItem(AuthConstants.USER_SESSION_STORE);
+  @action unSetUserToken = async () => {
+    await auth().signOut();
   };
 
   @action unSetSelectedDeviceToken = () => {
