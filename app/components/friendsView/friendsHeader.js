@@ -1,10 +1,15 @@
 import React, {useState} from 'react';
 import {Platform} from 'react-native';
 import {SearchBar} from 'react-native-elements';
+import {algoliaSearchUsers} from '../../functionsApi/firebaseCloudFunctions';
 const FriendsHeader = () => {
   const [searchText, setSearchText] = useState('');
-  const updateSearch = search => {
-    setSearchText({search});
+  const updateSearch = searchKey => {
+    setSearchText(searchKey);
+    algoliaSearchUsers(searchKey).then(res => {
+      // debugger;
+      console.log(res);
+    });
   };
   return (
     <SearchBar

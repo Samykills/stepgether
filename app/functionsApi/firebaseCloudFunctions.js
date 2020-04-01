@@ -26,20 +26,6 @@ export const getUserInfo = () => {
   });
 };
 
-export const searchUser = searchKey => {
-  return new Promise((resolve, reject) => {
-    functions()
-      .httpsCallable('searchUser')({searchKey: '988skQqwBAX5gikmRerQ9NvAg5b2'})
-      .then(res => {
-        debugger;
-        resolve(res.data);
-      })
-      .catch(e => {
-        reject(e);
-      });
-  });
-};
-
 export const algoliaSearchUsers = searchKey => {
   const ALGOLIA_APP_ID = 'HTPL0RS86J';
   const ALGOLIA_SEARCH_KEY = 'ae48ead2cfd0c531291053ca41161e59';
@@ -49,11 +35,11 @@ export const algoliaSearchUsers = searchKey => {
   let index = searchClient.initIndex(ALGOLIA_INDEX_NAME);
 
   return index
-    .search({
-      searchKey,
-    })
+    .search(searchKey)
     .then(function(responses) {
-      return console.log(responses.hits);
-      debugger;
+      return responses.hits;
+    })
+    .catch(err => {
+      console.log(err);
     });
 };
