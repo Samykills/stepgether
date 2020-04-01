@@ -4,13 +4,20 @@ import {Button} from 'react-native-elements';
 import {inject} from 'mobx-react';
 import {Fitbit_Init} from '../healthKits/fitbitKit';
 import {DeviceConstants} from '../constants';
+import {saveSelectedDeviceToken} from '../functionsApi/firebaseCloudFunctions';
+
 const DeviceSelection = ({AuthStore}) => {
   const {setSelectedDeviceToken} = AuthStore;
   const fitbitInit = async () => {
     await Fitbit_Init();
+    saveSelectedDeviceToken(DeviceConstants.DEVICE_FITBIT);
     setSelectedDeviceToken(DeviceConstants.DEVICE_FITBIT);
   };
 
+  const appleWatchInit = () => {
+    saveSelectedDeviceToken(DeviceConstants.DEVICE_FITBIT);
+    setSelectedDeviceToken(DeviceConstants.DEVICE_APPLE_WATCH);
+  };
   return (
     <View style={[styles.container]}>
       <Button
@@ -21,9 +28,7 @@ const DeviceSelection = ({AuthStore}) => {
       <Button
         title={'Apple Watch'}
         accessibilityLabel={'Apple Watch'}
-        onPress={() =>
-          setSelectedDeviceToken(DeviceConstants.DEVICE_APPLE_WATCH)
-        }
+        onPress={appleWatchInit}
       />
     </View>
   );

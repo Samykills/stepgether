@@ -11,7 +11,7 @@ const FriendsNewRequest = ({newFriendRequestList}) => {
         <FlatList
           data={newFriendRequestList}
           renderItem={({item}) => <NewFriendsListItem friendInfo={item} />}
-          keyExtractor={(item, index) => item.id.toString()}
+          keyExtractor={(item, index) => item.id}
         />
       </View>
     )

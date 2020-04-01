@@ -1,15 +1,37 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, StyleSheet} from 'react-native';
 import FriendsHeader from './friendsHeader';
 import FriendsNewRequest from './friendsNewRequest';
 import FriendsList from './friendsList';
-
-const FriendsView = () => {
-  return (
+import {inject, observer} from 'mobx-react';
+import {getUserInfo} from '../../functionsApi/firebaseCloudFunctions';
+import ErrorView from '../error';
+const FriendsView = ({AuthStore}) => {
+  const {userInfo, setUserInfo} = AuthStore;
+  const [loadingFailed, setLoadingFailed] = useState(false);
+  useEffect(() => {
+    getUserInfo().then(
+      res => {
+        setUserInfo(res);
+      },
+      err => {
+        setLoadingFailed(true);
+      },
+    );
+  }, []);
+  return loadingFailed ? (
+    <ErrorView />
+  ) : (
     <View style={[styles.container]}>
       <FriendsHeader />
-      <FriendsNewRequest newFriendRequestList={Data.newFriendRequests} />
-      <FriendsList friendsList={Data.friendsList} />
+      {userInfo && userInfo.friends && (
+        <FriendsNewRequest
+          newFriendRequestList={userInfo.friends.newRequests}
+        />
+      )}
+      {userInfo && userInfo.friends && (
+        <FriendsList friendsList={userInfo.friends.list} />
+      )}
     </View>
   );
 };
@@ -18,7 +40,7 @@ const styles = StyleSheet.create({
   container: {flex: 1, backgroundColor: 'white'},
 });
 
-export default FriendsView;
+export default inject('AuthStore')(observer(FriendsView));
 
 const Data = {
   newFriendRequests: [

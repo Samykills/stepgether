@@ -11,7 +11,7 @@ const FriendsList = ({friendsList}) => {
       <FlatList
         data={friendsList}
         renderItem={({item}) => <FriendListItem friendInfo={item} />}
-        keyExtractor={(item, index) => item.id.toString()}
+        keyExtractor={(item, index) => item.id}
       />
     </View>
   );

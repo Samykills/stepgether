@@ -6,6 +6,7 @@ import {Fitbit_Init} from '../healthKits/fitbitKit';
 import auth from '@react-native-firebase/auth';
 
 class AuthStore {
+  @observable userInfo;
   @observable userToken;
   @observable selectedDeviceToken;
   @observable isLoading = true; //only use it for appRouter.js
@@ -76,6 +77,10 @@ class AuthStore {
       return JSON.parse(token);
     }
     return null;
+  };
+
+  @action setUserInfo = userInfo => {
+    this.userInfo = userInfo;
   };
 }
 
