@@ -26,6 +26,10 @@ export const getUserInfo = () => {
   });
 };
 
+/**
+ * Aloglia search to search for users in friendsview.
+ * @param {string} searchKey
+ */
 export const algoliaSearchUsers = searchKey => {
   const ALGOLIA_APP_ID = 'HTPL0RS86J';
   const ALGOLIA_SEARCH_KEY = 'ae48ead2cfd0c531291053ca41161e59';
