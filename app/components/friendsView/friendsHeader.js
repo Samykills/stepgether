@@ -11,8 +11,8 @@ import {SearchBar} from 'react-native-elements';
 import {algoliaSearchUsers} from '../../functionsApi/firebaseCloudFunctions';
 import FriendListItem from './friendListItem';
 
-const {height} = Dimensions.get('screen');
-const ANIMATION_DURATION = 350;
+const {width} = Dimensions.get('screen');
+const ANIMATION_DURATION = 120;
 
 const FriendsHeader = () => {
   const [searchText, setSearchText] = useState('');
@@ -20,7 +20,7 @@ const FriendsHeader = () => {
   const ANIMATED_SEARCH_VALUE = useRef(new Animated.Value(0)).current;
   const showSearchView = ANIMATED_SEARCH_VALUE.interpolate({
     inputRange: [0, 0.5, 1],
-    outputRange: [height, height / 2, 65],
+    outputRange: [width, width / 2, 0],
     extrapolate: 'clamp',
   });
 
@@ -29,20 +29,22 @@ const FriendsHeader = () => {
       Animated.timing(ANIMATED_SEARCH_VALUE, {
         toValue: 1,
         duration: ANIMATION_DURATION,
+        useNativeDriver: true,
       }).start();
     } else {
       Animated.timing(ANIMATED_SEARCH_VALUE, {
         toValue: 0,
         duration: ANIMATION_DURATION,
+        useNativeDriver: true,
       }).start();
     }
   }, [searchResults]);
 
-  const updateSearch = searchKey => {
+  const updateSearch = (searchKey) => {
     setSearchText(searchKey);
     if (searchKey) {
-      algoliaSearchUsers(searchKey).then(res => {
-        const searchResArray = res.map(item => {
+      algoliaSearchUsers(searchKey).then((res) => {
+        const searchResArray = res.map((item) => {
           return {
             imageUrl: item.photoUrl,
             name: item.displayName,
@@ -67,7 +69,11 @@ const FriendsHeader = () => {
         lightTheme={true}
         platform={Platform.OS}
       />
-      <Animated.View style={[styles.animatedView, {top: showSearchView}]}>
+      <Animated.View
+        style={[
+          styles.animatedView,
+          {transform: [{translateX: showSearchView}]},
+        ]}>
         <FlatList
           data={searchResults}
           renderItem={({item}) => (
@@ -85,6 +91,7 @@ const FriendsHeader = () => {
 const styles = StyleSheet.create({
   animatedView: {
     left: '2%',
+    top: 65,
     flex: 1,
     width: '96%',
     backgroundColor: '#FFFFFF',

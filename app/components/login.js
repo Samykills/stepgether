@@ -22,19 +22,25 @@ const Login = () => {
     });
   }, []);
 
-  const onGoogleSignInButtonPress = async () => {
+  const onGoogleSignInButtonPress = () => {
     setIsDisabled(true);
-    const userInfo = await googleSignIn();
-    if (userInfo) {
-      const {idToken, accessToken} = userInfo;
-      const credential = auth.GoogleAuthProvider.credential(
-        idToken,
-        accessToken,
-      );
-      await auth().signInWithCredential(credential);
-    } else {
-      setIsDisabled(false);
-    }
+    googleSignIn()
+      .then(userInfo => {
+        if (userInfo) {
+          const {idToken, accessToken} = userInfo;
+          const credential = auth.GoogleAuthProvider.credential(
+            idToken,
+            accessToken,
+          );
+          auth().signInWithCredential(credential);
+        } else {
+          throw 'userInfo empty on google signIn';
+        }
+      })
+      .catch(err => {
+        setIsDisabled(false);
+        console.log(err);
+      });
   };
 
   const onAppleSignInButtonPress = async () => {
