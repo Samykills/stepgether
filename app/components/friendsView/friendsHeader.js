@@ -15,7 +15,7 @@ const {width} = Dimensions.get('screen');
 const ANIMATION_DURATION = 120;
 
 const FriendsHeader = () => {
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState(null);
   const [searchResults, setSearchResults] = useState([]);
   const ANIMATED_SEARCH_VALUE = useRef(new Animated.Value(0)).current;
   const showSearchView = ANIMATED_SEARCH_VALUE.interpolate({
