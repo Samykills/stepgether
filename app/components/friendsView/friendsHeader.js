@@ -14,7 +14,7 @@ import FriendListItem from './friendListItem';
 const {width} = Dimensions.get('screen');
 const ANIMATION_DURATION = 120;
 
-const FriendsHeader = () => {
+const FriendsHeader = ({navigation}) => {
   const [searchText, setSearchText] = useState(null);
   const [searchResults, setSearchResults] = useState([]);
   const ANIMATED_SEARCH_VALUE = useRef(new Animated.Value(0)).current;
@@ -44,21 +44,16 @@ const FriendsHeader = () => {
     setSearchText(searchKey);
     if (searchKey) {
       algoliaSearchUsers(searchKey).then((res) => {
-        const searchResArray = res.map((item) => {
-          return {
-            imageUrl: item.photoUrl,
-            name: item.displayName,
-            id: item.uid,
-          };
-        });
-        setSearchResults(searchResArray);
+        setSearchResults(res);
       });
     } else {
       setSearchResults([]);
     }
   };
 
-  const openProfile = () => {};
+  const openProfile = () => {
+    navigation.navigate('socialProfile', {});
+  };
 
   return (
     <>
@@ -81,7 +76,7 @@ const FriendsHeader = () => {
               <FriendListItem friendInfo={item} />
             </TouchableOpacity>
           )}
-          keyExtractor={(item, index) => item.id}
+          keyExtractor={(item, index) => item.uid}
         />
       </Animated.View>
     </>

@@ -36,7 +36,7 @@ const Data = {
     {
       id: 1,
       name: 'Steve Siano',
-      profileImageUrl:
+      photoUrl:
         'https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg',
       postImageUrl:
         'http://i.huffpost.com/gen/1011372/images/o-FITNESS-TRACKER-facebook.jpg',
@@ -49,7 +49,7 @@ const Data = {
     {
       id: 2,
       name: 'Richard Hook',
-      profileImageUrl:
+      photoUrl:
         'http://dubeat.com/wp-content/uploads/Professional-Fitness-Photography-0024.jpg',
       postImageUrl: 'https://i.ytimg.com/vi/aWlJqhECHPg/maxresdefault.jpg',
       postText:
@@ -62,7 +62,7 @@ const Data = {
     {
       id: 3,
       name: 'Gregory Richardson',
-      profileImageUrl:
+      photoUrl:
         'https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg',
       postImageUrl: 'https://i.ytimg.com/vi/gFyxKN58wA0/maxresdefault.jpg',
       postText: 'Had a great shoulder day, time to work on my arms!',

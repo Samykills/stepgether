@@ -7,7 +7,7 @@ const PostCard = ({post}) => {
   const {
     id,
     name,
-    profileImageUrl,
+    photoUrl,
     postedOn,
     postImageUrl,
     postText,
@@ -19,7 +19,7 @@ const PostCard = ({post}) => {
     <View style={[styles.container]}>
       <CardTitle
         name={name}
-        profileImageUrl={profileImageUrl}
+        photoUrl={photoUrl}
         postedOn={postedOn}
       />
       <Image

@@ -4,13 +4,15 @@ import PropTypes from 'prop-types';
 import StepgetherAvatar from '../../common/stepgetherAvatar';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
 
+const profileBackgroundImage =
+  'http://new-cloudfront.zekkei-japan.jp/images/articles/871fd7574601ff2ada79c8fbb07e4917.jpg';
 const ProfileHeader = ({userProfile}) => {
   return (
     <View>
       <Image
         style={[styles.headerImage]}
         resizeMode={'cover'}
-        source={{uri: userProfile.profileBackgroundImage}}
+        source={{uri: profileBackgroundImage}}
       />
 
       <View style={[styles.avatar]}>
@@ -22,12 +24,12 @@ const ProfileHeader = ({userProfile}) => {
           children={() => (
             <StepgetherAvatar
               size={150}
-              avatarType={userProfile.profileImageUrl}
-              title={userProfile.name}
+              avatarType={userProfile.photoUrl}
+              title={userProfile.displayName}
             />
           )}
         />
-        <Text style={[styles.userName]}>{userProfile.name}</Text>
+        <Text style={[styles.userName]}>{userProfile.displayName}</Text>
       </View>
     </View>
   );

@@ -1,10 +1,10 @@
 import React from 'react';
 import {ListItem} from 'react-native-elements';
 import PropTypes from 'prop-types';
-const CardTitle = ({name, profileImageUrl, postedOn}) => {
-  return profileImageUrl.includes('http') ? (
+const CardTitle = ({name, photoUrl, postedOn}) => {
+  return photoUrl.includes('http') ? (
     <ListItem
-      leftAvatar={{source: {uri: profileImageUrl}}}
+      leftAvatar={{source: {uri: photoUrl}}}
       title={name}
       subtitle={postedOn}
       bottomDivider
@@ -20,7 +20,7 @@ const CardTitle = ({name, profileImageUrl, postedOn}) => {
 };
 CardTitle.proptypes = {
   name: PropTypes.string,
-  profileImageUrl: PropTypes.string,
+  photoUrl: PropTypes.string,
   postedOn: PropTypes.string,
 };
 export default CardTitle;

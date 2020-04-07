@@ -38,12 +38,10 @@ const styles = StyleSheet.create({
 });
 
 const UserProfileData = {
-  name: 'Warren Buffett',
+  displayName: 'Warren Buffett',
   aboutMe: 'Your life is your message to the world, make sure its inspiring!!',
-  profileImageUrl:
+  photoUrl:
     'https://image.cnbcfm.com/api/v1/image/105894249-15572301173711u8a0015.jpg',
-  profileBackgroundImage:
-    'http://new-cloudfront.zekkei-japan.jp/images/articles/871fd7574601ff2ada79c8fbb07e4917.jpg',
 };
 
 FriendsProfile.propTypes = {

@@ -13,14 +13,14 @@ const NewFriendsListItem = ({friendInfo}) => {
       <Divider />
       <View style={[styles.container]}>
         <StepgetherAvatar
-          avatarType={friendInfo.imageUrl}
-          title={friendInfo.name}
+          avatarType={friendInfo.photoUrl}
+          title={friendInfo.displayName}
           size={60}
           onPress={openProfile}
         />
         <View style={[styles.name]}>
           <Text numberOfLines={1} ellipsizeMode={'tail'}>
-            {friendInfo.name}
+            {friendInfo.displayName}
           </Text>
         </View>
         <View style={[styles.options]}>
