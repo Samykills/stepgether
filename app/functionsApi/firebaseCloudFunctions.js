@@ -1,30 +1,8 @@
-import functions from '@react-native-firebase/functions';
+// import functions from '@react-native-firebase/functions';
 import algoliasearch from 'algoliasearch';
 if (__DEV__) {
   // functions().useFunctionsEmulator('http://127.0.0.1:5001');
 }
-/**
- * this function saves selectedDeviceToken to users table
- * @param {string} selectedDeviceToken
- */
-export const saveSelectedDeviceToken = selectedDeviceToken => {
-  functions().httpsCallable('saveSelectedDeviceToken')({
-    selectedDevice: selectedDeviceToken,
-  });
-};
-
-export const getUserInfo = () => {
-  return new Promise((resolve, reject) => {
-    functions()
-      .httpsCallable('getUserInfo')()
-      .then(res => {
-        resolve(res.data);
-      })
-      .catch(e => {
-        reject(e);
-      });
-  });
-};
 
 /**
  * Aloglia search to search for users in friendsview.

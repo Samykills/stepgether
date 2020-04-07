@@ -4,13 +4,13 @@ import FriendsHeader from './friendsHeader';
 import FriendsNewRequest from './friendsNewRequest';
 import FriendsList from './friendsList';
 import {inject, observer} from 'mobx-react';
-import {getUserInfo} from '../../functionsApi/firebaseCloudFunctions';
 import ErrorView from '../error';
+import {getCurrentUserInfo} from '../../firestore/firestoreFunctions';
 const FriendsView = ({AuthStore}) => {
   const {userInfo, setUserInfo} = AuthStore;
   const [loadingFailed, setLoadingFailed] = useState(false);
   useEffect(() => {
-    getUserInfo().then(
+    getCurrentUserInfo().then(
       res => {
         setUserInfo(res);
       },

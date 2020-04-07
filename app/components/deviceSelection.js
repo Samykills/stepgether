@@ -4,7 +4,7 @@ import {Button} from 'react-native-elements';
 import {inject} from 'mobx-react';
 import {Fitbit_Init} from '../healthKits/fitbitKit';
 import {DeviceConstants} from '../constants';
-import {saveSelectedDeviceToken} from '../functionsApi/firebaseCloudFunctions';
+import {saveSelectedDeviceToken} from '../firestore/firestoreFunctions';
 
 const DeviceSelection = ({AuthStore}) => {
   const {setSelectedDeviceToken} = AuthStore;
@@ -15,7 +15,7 @@ const DeviceSelection = ({AuthStore}) => {
   };
 
   const appleWatchInit = () => {
-    saveSelectedDeviceToken(DeviceConstants.DEVICE_FITBIT);
+    saveSelectedDeviceToken(DeviceConstants.DEVICE_APPLE_WATCH);
     setSelectedDeviceToken(DeviceConstants.DEVICE_APPLE_WATCH);
   };
   return (
