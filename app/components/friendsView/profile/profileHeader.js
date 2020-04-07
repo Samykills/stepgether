@@ -6,7 +6,7 @@ import {AnimatedCircularProgress} from 'react-native-circular-progress';
 
 const profileBackgroundImage =
   'http://new-cloudfront.zekkei-japan.jp/images/articles/871fd7574601ff2ada79c8fbb07e4917.jpg';
-const ProfileHeader = ({userProfile}) => {
+const ProfileHeader = ({userInfo}) => {
   return (
     <View>
       <Image
@@ -24,12 +24,12 @@ const ProfileHeader = ({userProfile}) => {
           children={() => (
             <StepgetherAvatar
               size={150}
-              avatarType={userProfile.photoUrl}
-              title={userProfile.displayName}
+              avatarType={userInfo.photoUrl}
+              title={userInfo.displayName}
             />
           )}
         />
-        <Text style={[styles.userName]}>{userProfile.displayName}</Text>
+        <Text style={[styles.userName]}>{userInfo.displayName}</Text>
       </View>
     </View>
   );
@@ -47,6 +47,6 @@ const styles = StyleSheet.create({
   userName: {fontSize: 18, marginTop: 10},
 });
 ProfileHeader.propTypes = {
-  userProfile: PropTypes.object,
+  userInfo: PropTypes.object,
 };
 export default ProfileHeader;

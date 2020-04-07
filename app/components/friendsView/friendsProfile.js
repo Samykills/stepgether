@@ -1,27 +1,20 @@
 import React, {useState, useEffect} from 'react';
-import {View, ActivityIndicator, SafeAreaView, StyleSheet} from 'react-native';
-import PropTypes from 'prop-types';
+import {SafeAreaView, StyleSheet} from 'react-native';
 import SocialProfile from './profile/socialProfile';
-const FriendsProfile = ({userId}) => {
+const FriendsProfile = props => {
+  const {userInfo} = props.route.params;
   const [userProfile, setUserProfile] = useState({});
-
   useEffect(() => {
-    fetchUserProfileViaId(userId).then(res => {
+    fetchUserProfileViaId(userInfo.uid).then(res => {
       setUserProfile(res);
     });
-  }, [userId]);
+  }, []);
 
-  const element = () => {
-    return Object.entries(userProfile).length > 0 ? (
-      <SocialProfile userProfile={userProfile} />
-    ) : (
-      <View style={[styles.loaderContainer]}>
-        <ActivityIndicator size="large" color="#0000ff" />
-      </View>
-    );
-  };
-
-  return <SafeAreaView style={[styles.container]}>{element()}</SafeAreaView>;
+  return (
+    <SafeAreaView style={[styles.container]}>
+      <SocialProfile userInfo={userInfo} userProfile={userProfile} />
+    </SafeAreaView>
+  );
 };
 
 const fetchUserProfileViaId = userId => {
@@ -42,10 +35,6 @@ const UserProfileData = {
   aboutMe: 'Your life is your message to the world, make sure its inspiring!!',
   photoUrl:
     'https://image.cnbcfm.com/api/v1/image/105894249-15572301173711u8a0015.jpg',
-};
-
-FriendsProfile.propTypes = {
-  userId: PropTypes.string,
 };
 
 export default FriendsProfile;

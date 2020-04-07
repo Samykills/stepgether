@@ -10,11 +10,13 @@ import {
 import {SearchBar} from 'react-native-elements';
 import {algoliaSearchUsers} from '../../functionsApi/firebaseCloudFunctions';
 import FriendListItem from './friendListItem';
+import {useNavigation} from '@react-navigation/native';
 
 const {width} = Dimensions.get('screen');
 const ANIMATION_DURATION = 120;
 
-const FriendsHeader = ({navigation}) => {
+const FriendsHeader = () => {
+  const navigation = useNavigation();
   const [searchText, setSearchText] = useState(null);
   const [searchResults, setSearchResults] = useState([]);
   const ANIMATED_SEARCH_VALUE = useRef(new Animated.Value(0)).current;
@@ -40,10 +42,10 @@ const FriendsHeader = ({navigation}) => {
     }
   }, [searchResults]);
 
-  const updateSearch = (searchKey) => {
+  const updateSearch = searchKey => {
     setSearchText(searchKey);
     if (searchKey) {
-      algoliaSearchUsers(searchKey).then((res) => {
+      algoliaSearchUsers(searchKey).then(res => {
         setSearchResults(res);
       });
     } else {
@@ -51,8 +53,8 @@ const FriendsHeader = ({navigation}) => {
     }
   };
 
-  const openProfile = () => {
-    navigation.navigate('socialProfile', {});
+  const openProfile = item => {
+    navigation.navigate('socialProfile', {userInfo: item});
   };
 
   return (
@@ -72,7 +74,7 @@ const FriendsHeader = ({navigation}) => {
         <FlatList
           data={searchResults}
           renderItem={({item}) => (
-            <TouchableOpacity onPress={openProfile}>
+            <TouchableOpacity onPress={() => openProfile(item)}>
               <FriendListItem friendInfo={item} />
             </TouchableOpacity>
           )}
