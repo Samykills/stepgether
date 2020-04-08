@@ -1,16 +1,24 @@
-import React from 'react';
-import {ScrollView, View, StyleSheet} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {SafeAreaView, View, StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
 import ProfileHeader from './profileHeader';
 import ProfileBody from './profileBody';
-const SocialProfile = ({userInfo, userProfile}) => {
+import {getUserInfo} from '../../../firestore/firestoreFunctions';
+const SocialProfile = props => {
+  const {userInfo} = props.route.params;
+  const [userProfile, setUserProfile] = useState(null);
+  useEffect(() => {
+    getUserInfo(userInfo.uid).then(res => {
+      setUserProfile(res);
+    });
+  }, []);
   return (
-    <View style={[styles.container]}>
-      <ScrollView contentContainerStyle={[styles.scrollViewContainer]}>
+    <SafeAreaView style={[styles.container]}>
+      <View style={[styles.container]}>
         <ProfileHeader userInfo={userInfo} />
-        <ProfileBody userProfile={userProfile} />
-      </ScrollView>
-    </View>
+        {userProfile ? <ProfileBody userProfile={userProfile} /> : null}
+      </View>
+    </SafeAreaView>
   );
 };
 
@@ -19,9 +27,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
     padding: 10,
-  },
-  scrollViewContainer: {
-    flex: 1,
   },
 });
 SocialProfile.propTypes = {

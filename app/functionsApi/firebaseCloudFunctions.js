@@ -1,4 +1,4 @@
-// import functions from '@react-native-firebase/functions';
+import auth from '@react-native-firebase/auth';
 import algoliasearch from 'algoliasearch';
 if (__DEV__) {
   // functions().useFunctionsEmulator('http://127.0.0.1:5001');
@@ -19,7 +19,7 @@ export const algoliaSearchUsers = searchKey => {
   return index
     .search(searchKey)
     .then(function(responses) {
-      return responses.hits;
+      return responses.hits.filter(res => res.uid != auth().currentUser.uid);
     })
     .catch(err => {
       console.log(err);

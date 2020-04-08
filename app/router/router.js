@@ -17,7 +17,7 @@ import DeviceSelection from '../components/deviceSelection';
 import CommentsView from '../components/feed/commentsView';
 import SettingsView from '../components/settingsView';
 import FriendsView from '../components/friendsView/friendsView';
-import FriendsProfile from '../components/friendsView/friendsProfile';
+import SocialProfile from '../components/friendsView/profile/socialProfile';
 
 const BottomTabs = createMaterialTopTabNavigator();
 const TopTabs = createMaterialTopTabNavigator();
@@ -88,7 +88,7 @@ const AppRouter = ({RouterStore, AuthStore, ErrorStore}) => {
                     />
                     <Stack.Screen
                       name="socialProfile"
-                      component={FriendsProfile}
+                      component={SocialProfile}
                       options={{headerShown: false}}
                     />
                     <Stack.Screen

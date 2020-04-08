@@ -3,35 +3,34 @@ import {View, StyleSheet} from 'react-native';
 import FriendsHeader from './friendsHeader';
 import FriendsNewRequest from './friendsNewRequest';
 import FriendsList from './friendsList';
-import {inject, observer} from 'mobx-react';
 import ErrorView from '../error';
-import {getCurrentUserInfo} from '../../firestore/firestoreFunctions';
-const FriendsView = ({AuthStore}) => {
-  const {userInfo, setUserInfo} = AuthStore;
+import {subscribeToNewFollowersRequestCollection} from '../../firestore/firestoreFunctions';
+const FriendsView = () => {
+  const [newRequest, setNewRequest] = useState([]);
+  const [friendsList, setFriendsList] = useState([]);
   const [loadingFailed, setLoadingFailed] = useState(false);
   useEffect(() => {
-    getCurrentUserInfo().then(
-      res => {
-        setUserInfo(res);
+    const subscribe = subscribeToNewFollowersRequestCollection.onSnapshot(
+      snapshot => {
+        let newRequestsArr = [];
+        snapshot.forEach(doc => {
+          newRequestsArr.push(doc.data());
+        });
+        setNewRequest(newRequestsArr);
       },
-      err => {
+      error => {
         setLoadingFailed(true);
       },
     );
+    return () => subscribe();
   }, []);
   return loadingFailed ? (
     <ErrorView />
   ) : (
     <View style={[styles.container]}>
       <FriendsHeader />
-      {userInfo && userInfo.friends && (
-        <FriendsNewRequest
-          newFriendRequestList={userInfo.friends.newRequests}
-        />
-      )}
-      {userInfo && userInfo.friends && (
-        <FriendsList friendsList={userInfo.friends.list} />
-      )}
+      <FriendsNewRequest newFriendRequestList={newRequest} />
+      <FriendsList friendsList={friendsList} />
     </View>
   );
 };
@@ -40,7 +39,7 @@ const styles = StyleSheet.create({
   container: {flex: 1, backgroundColor: 'white'},
 });
 
-export default inject('AuthStore')(observer(FriendsView));
+export default FriendsView;
 
 const Data = {
   newFriendRequests: [
