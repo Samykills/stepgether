@@ -5,12 +5,11 @@ import {
   followAUser,
   ifCurrentUserIsFollower,
   getNewFollowersRequest,
-  deleteFollowRequest,
+  deleteCurrentUsersFollowRequest,
 } from '../../../../firestore/firestoreFunctions';
 import auth from '@react-native-firebase/auth';
 
 const FollowButton = ({userId}) => {
-    
   const [state, setState] = useState({
     isLoading: false,
     isFollower: false,
@@ -22,7 +21,7 @@ const FollowButton = ({userId}) => {
       setState({...state, isLoading: true});
       if (state.isRequested) {
         //cancel the request here
-        deleteFollowRequest(userId).then(
+        deleteCurrentUsersFollowRequest(userId).then(
           res => {
             setState({...state, isLoading: false, isRequested: false});
           },

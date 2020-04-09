@@ -4,13 +4,16 @@ import FriendsHeader from './friendsHeader';
 import FriendsNewRequest from './friendsNewRequest';
 import FriendsList from './friendsList';
 import ErrorView from '../error';
-import {subscribeToNewFollowersRequestCollection} from '../../firestore/firestoreFunctions';
+import {
+  subscribeToNewFollowersRequestCollection,
+  subscribeToFollowersListCollection,
+} from '../../firestore/firestoreFunctions';
 const FriendsView = () => {
   const [newRequest, setNewRequest] = useState([]);
-  const [friendsList, setFriendsList] = useState([]);
+  const [followersList, setFollowersList] = useState([]);
   const [loadingFailed, setLoadingFailed] = useState(false);
   useEffect(() => {
-    const subscribe = subscribeToNewFollowersRequestCollection.onSnapshot(
+    const subscribeNewFollowers = subscribeToNewFollowersRequestCollection().onSnapshot(
       snapshot => {
         let newRequestsArr = [];
         snapshot.forEach(doc => {
@@ -22,15 +25,33 @@ const FriendsView = () => {
         setLoadingFailed(true);
       },
     );
-    return () => subscribe();
+
+    return () => subscribeNewFollowers();
   }, []);
+
+  useEffect(() => {
+    const subscribeFollowersList = subscribeToFollowersListCollection().onSnapshot(
+      snapshot => {
+        let followersArr = [];
+        snapshot.forEach(doc => {
+          followersArr.push(doc.data());
+        });
+        setFollowersList(followersArr);
+      },
+      error => {
+        setLoadingFailed(true);
+      },
+    );
+    return () => subscribeFollowersList();
+  }, []);
+
   return loadingFailed ? (
     <ErrorView />
   ) : (
     <View style={[styles.container]}>
       <FriendsHeader />
       <FriendsNewRequest newFriendRequestList={newRequest} />
-      <FriendsList friendsList={friendsList} />
+      <FriendsList friendsList={followersList} />
     </View>
   );
 };

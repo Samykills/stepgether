@@ -1,3 +1,4 @@
+// import functions from '@react-native-firebase/functions';
 import auth from '@react-native-firebase/auth';
 import algoliasearch from 'algoliasearch';
 if (__DEV__) {
@@ -25,3 +26,17 @@ export const algoliaSearchUsers = searchKey => {
       console.log(err);
     });
 };
+
+/**
+ * test function call here
+ */
+
+//  export const testFunc = functions().httpsCallable('someTestFunction');
+// testFunc({
+//   displayName: 'ullas gupta',
+//   photoUrl:
+//     'https://lh3.googleusercontent.com/a-/AOh14GjNJq0mK8tfV0-sz7tFdfpcq-LmocXVzIAz7qATeQ=s96-c',
+//   uid: '7GkiB0FYrEPHt9BYO6608flSJdH3',
+// }).then(res => {
+//   debugger;
+// });

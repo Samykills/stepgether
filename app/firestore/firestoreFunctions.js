@@ -4,7 +4,10 @@ import auth from '@react-native-firebase/auth';
 const USER_COLLECTION = 'users';
 const NEW_FOLLOWERS_REQUEST = 'newFollowersRequest';
 const FOLLOWERS_LIST = 'followersList';
-
+// firestore().settings({
+//   host: "http://127.0.0.1:8080",
+//   ssl: false
+// })
 export const getCurrentUserInfo = () => {
   return firestore()
     .collection(USER_COLLECTION)
@@ -71,16 +74,60 @@ export const followAUser = userId => {
 };
 
 /**
- * cancel the follow request
+ * delete the follow request of current logged in user for the passed userId
  * @param {*} userId
  */
-export const deleteFollowRequest = userId => {
+export const deleteCurrentUsersFollowRequest = userId => {
   return firestore()
     .collection(USER_COLLECTION)
     .doc(userId)
     .collection(NEW_FOLLOWERS_REQUEST)
     .doc(auth().currentUser.uid)
     .delete()
+    .then(res => {
+      return true;
+    })
+    .catch(err => {
+      handleFirestoreError(err);
+    });
+};
+
+/**
+ * decline a user's follow request
+ * @param {*} err
+ */
+export const declineAFollowRequest = userId => {
+  return firestore()
+    .collection(USER_COLLECTION)
+    .doc(auth().currentUser.uid)
+    .collection(NEW_FOLLOWERS_REQUEST)
+    .doc(userId)
+    .delete()
+    .then(res => {
+      return true;
+    })
+    .catch(err => {
+      handleFirestoreError(err);
+    });
+};
+
+/**
+ * accept a user's follow request
+ * @param {*} friendInfo
+ */
+export const acceptAFollowRequest = friendInfo => {
+  // ok here is what we need to do...add two cloud functions that gets triggered onCreate and onDelete for followersList.
+  //onCreate we declineAFollowRequest and add to current and following users followersList.
+  //onDelete we remove/delete from current and following users FollowersList.
+  // declineAFollowRequest(friendInfo.uid);
+  //add to the following users followers list
+  //add to currentUsers followers list
+  return firestore()
+    .collection(USER_COLLECTION)
+    .doc(auth().currentUser.uid)
+    .collection(FOLLOWERS_LIST)
+    .doc(friendInfo.uid)
+    .set(friendInfo)
     .then(res => {
       return true;
     })
@@ -117,12 +164,23 @@ export const getNewFollowersRequest = userId => {
 };
 
 /**
- * subscribe to newfollowers
+ * subscribe to newfollowersList
  */
-export const subscribeToNewFollowersRequestCollection = firestore()
-  .collection(USER_COLLECTION)
-  .doc(auth().currentUser.uid)
-  .collection(NEW_FOLLOWERS_REQUEST);
+export const subscribeToNewFollowersRequestCollection = () =>
+  firestore()
+    .collection(USER_COLLECTION)
+    .doc(auth().currentUser.uid)
+    .collection(NEW_FOLLOWERS_REQUEST);
+
+/**
+ * subscribe to followersList
+ *
+ */
+export const subscribeToFollowersListCollection = () =>
+  firestore()
+    .collection(USER_COLLECTION)
+    .doc(auth().currentUser.uid)
+    .collection(FOLLOWERS_LIST);
 
 /**
  * If current user is a follower return true else false

@@ -4,10 +4,19 @@ import {Divider, Button} from 'react-native-elements';
 import StepgetherAvatar from '../common/stepgetherAvatar';
 import PropTypes from 'prop-types';
 import {useNavigation} from '@react-navigation/native';
-
+import {
+  declineAFollowRequest,
+  acceptAFollowRequest,
+} from '../../firestore/firestoreFunctions';
 const NewFriendsListItem = ({friendInfo}) => {
   const navigation = useNavigation();
   const openProfile = () => navigation.navigate('socialProfile');
+  const declineUserRequest = () => {
+    declineAFollowRequest(friendInfo.uid);
+  };
+  const acceptUserRequest = () => {
+    acceptAFollowRequest(friendInfo);
+  };
   return (
     <>
       <Divider />
@@ -24,8 +33,13 @@ const NewFriendsListItem = ({friendInfo}) => {
           </Text>
         </View>
         <View style={[styles.options]}>
-          <Button title="Accept" />
-          <Button title="Reject" type="outline" />
+          <Button title="Accept" raised onPress={acceptUserRequest} />
+          <Button
+            title="Reject"
+            type="outline"
+            raised
+            onPress={declineUserRequest}
+          />
         </View>
       </View>
       <Divider />
