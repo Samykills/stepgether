@@ -8,6 +8,8 @@ import {
   declineAFollowRequest,
   acceptAFollowRequest,
 } from '../../firestore/firestoreFunctions';
+import {COLOR_BLUE} from '../../theme/colors';
+
 const NewFriendsListItem = ({friendInfo}) => {
   const navigation = useNavigation();
   const navigateToSocialProfile = () =>
@@ -21,7 +23,7 @@ const NewFriendsListItem = ({friendInfo}) => {
   return (
     <TouchableHighlight
       onPress={navigateToSocialProfile}
-      underlayColor={'#03A9F4'}>
+      underlayColor={COLOR_BLUE}>
       <>
         <Divider />
         <View style={[styles.container]}>

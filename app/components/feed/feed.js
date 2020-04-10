@@ -4,6 +4,7 @@ import {SafeAreaView, FlatList, View} from 'react-native';
 import FeedHeader from './feedHeader';
 import Data from './apiData';
 import PostCard from '../common/postCard';
+import CreatePostButton from './components/createPostButton';
 
 const Feed = () => {
   return (
@@ -13,6 +14,7 @@ const Feed = () => {
         backgroundColor: 'white',
       }}>
       <FlatList
+        removeClippedSubviews
         ListHeaderComponent={() => (
           <FeedHeader userDetails={Data} userStories={Data.userStories} />
         )}
@@ -22,6 +24,7 @@ const Feed = () => {
         renderItem={({item}) => <PostCard key={item.id} post={item} />}
         keyExtractor={(item, index) => item.id.toString()}
       />
+      <CreatePostButton />
     </SafeAreaView>
   );
 };

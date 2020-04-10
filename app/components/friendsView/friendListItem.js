@@ -4,7 +4,7 @@ import {Divider} from 'react-native-elements';
 import StepgetherAvatar from '../common/stepgetherAvatar';
 import PropTypes from 'prop-types';
 import {useNavigation} from '@react-navigation/native';
-
+import {COLOR_BLUE} from '../../theme/colors';
 const FriendListItem = ({friendInfo}) => {
   const navigation = useNavigation();
 
@@ -15,7 +15,7 @@ const FriendListItem = ({friendInfo}) => {
   return (
     <TouchableHighlight
       onPress={navigateToSocialProfile}
-      underlayColor={'#03A9F4'}>
+      underlayColor={COLOR_BLUE}>
       <>
         <Divider />
         <View style={[styles.container]}>
