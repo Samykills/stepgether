@@ -6,6 +6,7 @@ import {
   ifCurrentUserIsFollower,
   getNewFollowersRequest,
   deleteCurrentUsersFollowRequest,
+  unFollowAUser,
 } from '../../../../firestore/firestoreFunctions';
 import auth from '@react-native-firebase/auth';
 
@@ -29,10 +30,19 @@ const FollowButton = ({userId}) => {
             setState({...state, isLoading: false});
           },
         );
-      } else {
+      } else if (!state.isFollower) {
         followAUser(userId).then(
           res => {
             setState({...state, isLoading: false, isRequested: true});
+          },
+          err => {
+            setState({...state, isLoading: false});
+          },
+        );
+      } else {
+        unFollowAUser(userId).then(
+          res => {
+            setState({isFollower: false, isLoading: false, isRequested: false});
           },
           err => {
             setState({...state, isLoading: false});
@@ -44,16 +54,16 @@ const FollowButton = ({userId}) => {
 
   useEffect(() => {
     setState({...state, isLoading: true});
-    ifCurrentUserIsFollower(userId).then(res => {
-      setState({...state, isFollower: res});
-    });
-    getNewFollowersRequest(userId).then(res => {
-      if (res) {
+    Promise.all([
+      ifCurrentUserIsFollower(userId),
+      getNewFollowersRequest(userId),
+    ]).then(res => {
+      if (res[1]) {
         if (res.filter(item => item.uid == auth().currentUser.uid).length > 0) {
-          setState({...state, isRequested: true, isLoading: false});
+          setState({isFollower: res[0], isRequested: true, isLoading: false});
         }
       } else {
-        setState({...state, isLoading: false});
+        setState({isFollower: res[0], isRequested: false, isLoading: false});
       }
     });
   }, []);

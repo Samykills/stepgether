@@ -52,7 +52,7 @@ export const getUserInfo = userId => {
 
 /**
  * add the current authenticated user to the newFollowers collection for the selected userId.
- * @param {*} userId
+ * @param {string} userId
  */
 export const followAUser = userId => {
   return firestore()
@@ -73,6 +73,21 @@ export const followAUser = userId => {
     });
 };
 
+/**
+ * unfollow a user, this delete the users form both the followers list.
+ * @param {string} userId
+ */
+export const unFollowAUser = userId => {
+  return firestore()
+    .collection(USER_COLLECTION)
+    .doc(auth().currentUser.uid)
+    .collection(FOLLOWERS_LIST)
+    .doc(userId)
+    .delete()
+    .catch(err => {
+      handleFirestoreError(err);
+    });
+};
 /**
  * delete the follow request of current logged in user for the passed userId
  * @param {*} userId

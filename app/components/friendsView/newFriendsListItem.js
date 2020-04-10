@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, TouchableHighlight} from 'react-native';
 import {Divider, Button} from 'react-native-elements';
 import StepgetherAvatar from '../common/stepgetherAvatar';
 import PropTypes from 'prop-types';
@@ -10,7 +10,8 @@ import {
 } from '../../firestore/firestoreFunctions';
 const NewFriendsListItem = ({friendInfo}) => {
   const navigation = useNavigation();
-  const openProfile = () => navigation.navigate('socialProfile');
+  const navigateToSocialProfile = () =>
+    navigation.navigate('socialProfile', {userInfo: friendInfo});
   const declineUserRequest = () => {
     declineAFollowRequest(friendInfo.uid);
   };
@@ -18,32 +19,35 @@ const NewFriendsListItem = ({friendInfo}) => {
     acceptAFollowRequest(friendInfo);
   };
   return (
-    <>
-      <Divider />
-      <View style={[styles.container]}>
-        <StepgetherAvatar
-          avatarType={friendInfo.photoUrl}
-          title={friendInfo.displayName}
-          size={60}
-          onPress={openProfile}
-        />
-        <View style={[styles.name]}>
-          <Text numberOfLines={1} ellipsizeMode={'tail'}>
-            {friendInfo.displayName}
-          </Text>
-        </View>
-        <View style={[styles.options]}>
-          <Button title="Accept" raised onPress={acceptUserRequest} />
-          <Button
-            title="Reject"
-            type="outline"
-            raised
-            onPress={declineUserRequest}
+    <TouchableHighlight
+      onPress={navigateToSocialProfile}
+      underlayColor={'#03A9F4'}>
+      <>
+        <Divider />
+        <View style={[styles.container]}>
+          <StepgetherAvatar
+            avatarType={friendInfo.photoUrl}
+            title={friendInfo.displayName}
+            size={60}
           />
+          <View style={[styles.name]}>
+            <Text numberOfLines={1} ellipsizeMode={'tail'}>
+              {friendInfo.displayName}
+            </Text>
+          </View>
+          <View style={[styles.options]}>
+            <Button title="Accept" raised onPress={acceptUserRequest} />
+            <Button
+              title="Reject"
+              type="outline"
+              raised
+              onPress={declineUserRequest}
+            />
+          </View>
         </View>
-      </View>
-      <Divider />
-    </>
+        <Divider />
+      </>
+    </TouchableHighlight>
   );
 };
 
