@@ -11,6 +11,7 @@
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		7849668E24479DFB00F305E2 /* click.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7849668D24479DFB00F305E2 /* click.mp3 */; };
 		788805F7242623DB00192AB4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 788805F6242623DA00192AB4 /* GoogleService-Info.plist */; };
 		78B2B47A23C94E4E00B4C35D /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78B2B47923C94E4E00B4C35D /* HealthKit.framework */; };
 		78E5334123F0A79E002A500B /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 78E5333123F0A79E002A500B /* Fontisto.ttf */; };
@@ -46,7 +47,7 @@
 		194A8075D4B98803AA70287D /* Pods-stepgether.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-stepgether.debug.xcconfig"; path = "Target Support Files/Pods-stepgether/Pods-stepgether.debug.xcconfig"; sourceTree = "<group>"; };
 		4E95A8FC737EBE2A4953F100 /* Pods-stepgetherTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-stepgetherTests.release.xcconfig"; path = "Target Support Files/Pods-stepgetherTests/Pods-stepgetherTests.release.xcconfig"; sourceTree = "<group>"; };
 		5D455CD1862D62A298F73B80 /* Pods-stepgether.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-stepgether.release.xcconfig"; path = "Target Support Files/Pods-stepgether/Pods-stepgether.release.xcconfig"; sourceTree = "<group>"; };
-		78079A7D23BE3E8F0098DF56 /* tick.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = tick.wav; path = ../../android/app/src/main/res/raw/tick.wav; sourceTree = "<group>"; };
+		7849668D24479DFB00F305E2 /* click.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = click.mp3; sourceTree = "<group>"; };
 		788805F6242623DA00192AB4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		78B2B47823C94E4E00B4C35D /* stepgether.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = stepgether.entitlements; path = stepgether/stepgether.entitlements; sourceTree = "<group>"; };
 		78B2B47923C94E4E00B4C35D /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
@@ -136,7 +137,7 @@
 		78079A7823BE3D320098DF56 /* assets */ = {
 			isa = PBXGroup;
 			children = (
-				78079A7D23BE3E8F0098DF56 /* tick.wav */,
+				7849668D24479DFB00F305E2 /* click.mp3 */,
 			);
 			path = assets;
 			sourceTree = "<group>";
@@ -285,6 +286,7 @@
 				78E5334C23F0A79E002A500B /* FontAwesome.ttf in Resources */,
 				78E5334823F0A79E002A500B /* Foundation.ttf in Resources */,
 				78E5334B23F0A79E002A500B /* FontAwesome5_Regular.ttf in Resources */,
+				7849668E24479DFB00F305E2 /* click.mp3 in Resources */,
 				78E5334923F0A79E002A500B /* Ionicons.ttf in Resources */,
 				78E5334E23F0A79E002A500B /* EvilIcons.ttf in Resources */,
 				78E5334423F0A79E002A500B /* Entypo.ttf in Resources */,
