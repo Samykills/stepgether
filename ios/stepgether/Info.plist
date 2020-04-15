@@ -88,5 +88,11 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+  <key>NSPhotoLibraryUsageDescription</key>
+  <string>Stepgether would like access to your photo gallery</string>
+  <key>NSCameraUsageDescription</key>
+  <string>Stepgether would like to use your camera</string>
+  <key>NSPhotoLibraryAddUsageDescription</key>
+  <string>Stepgether would like to save photos to your photo gallery</string>
 </dict>
 </plist>

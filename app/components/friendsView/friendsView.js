@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {View, StyleSheet} from 'react-native';
-import FriendsHeader from './friendsHeader';
+import PeopleSearch from './peopleSearch';
 import FriendsNewRequest from './friendsNewRequest';
 import FriendsList from './friendsList';
 import ErrorView from '../error';
@@ -49,7 +49,7 @@ const FriendsView = () => {
     <ErrorView />
   ) : (
     <View style={[styles.container]}>
-      <FriendsHeader />
+      <PeopleSearch />
       <FriendsNewRequest newFriendRequestList={newRequest} />
       <FriendsList friendsList={followersList} />
     </View>

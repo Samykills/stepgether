@@ -18,9 +18,9 @@ import CommentsView from '../components/feed/commentsView';
 import SettingsView from '../components/settingsView';
 import FriendsView from '../components/friendsView/friendsView';
 import SocialProfile from '../components/friendsView/profile/socialProfile';
+import CreatePostView from '../components/feed/createPostView';
 
-const BottomTabs = createMaterialTopTabNavigator();
-const TopTabs = createMaterialTopTabNavigator();
+const Tabs = createMaterialTopTabNavigator();
 const Stack = createNativeStackNavigator();
 
 const AppRouter = ({RouterStore, AuthStore, ErrorStore}) => {
@@ -57,32 +57,47 @@ const AppRouter = ({RouterStore, AuthStore, ErrorStore}) => {
                       options={{headerShown: false}}
                       children={() => (
                         <SafeAreaView style={[styles.container]}>
-                          <BottomTabs.Navigator
+                          <Tabs.Navigator
                             initialRouteName="Profile"
                             tabBarPosition={'bottom'}>
-                            <BottomTabs.Screen name="Feed" component={Feed} />
-                            <BottomTabs.Screen
-                              name="Profile"
-                              component={Profile}
-                            />
-                            <BottomTabs.Screen
-                              name="Community"
+                            <Tabs.Screen
+                              name="Feed"
                               children={() => (
                                 <SafeAreaView style={[styles.container]}>
-                                  <TopTabs.Navigator>
-                                    <TopTabs.Screen
-                                      name="Friends"
-                                      component={FriendsView}
+                                  <Stack.Navigator>
+                                    <Stack.Screen
+                                      name="feedView"
+                                      component={Feed}
+                                      options={{headerShown: false}}
                                     />
-                                    <TopTabs.Screen
-                                      name="Groups"
-                                      component={Group}
+                                    <Stack.Screen
+                                      name="createPostView"
+                                      component={CreatePostView}
+                                      options={{title: 'Create Post'}}
                                     />
-                                  </TopTabs.Navigator>
+                                  </Stack.Navigator>
                                 </SafeAreaView>
                               )}
                             />
-                          </BottomTabs.Navigator>
+                            <Tabs.Screen name="Profile" component={Profile} />
+                            <Tabs.Screen
+                              name="Community"
+                              children={() => (
+                                <SafeAreaView style={[styles.container]}>
+                                  <Tabs.Navigator>
+                                    <Tabs.Screen
+                                      name="Friends"
+                                      component={FriendsView}
+                                    />
+                                    <Tabs.Screen
+                                      name="Groups"
+                                      component={Group}
+                                    />
+                                  </Tabs.Navigator>
+                                </SafeAreaView>
+                              )}
+                            />
+                          </Tabs.Navigator>
                         </SafeAreaView>
                       )}
                     />
@@ -129,8 +144,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
-export default inject(
-  'AuthStore',
-  'RouterStore',
-  'ErrorStore',
-)(observer(AppRouter));
+export default inject('AuthStore', 'RouterStore', 'ErrorStore')(
+  observer(AppRouter),
+);

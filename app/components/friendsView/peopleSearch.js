@@ -11,11 +11,12 @@ import {SearchBar} from 'react-native-elements';
 import {algoliaSearchUsers} from '../../functionsApi/firebaseCloudFunctions';
 import FriendListItem from './friendListItem';
 import {useNavigation} from '@react-navigation/native';
+import PropTypes from 'prop-types';
 
 const {width} = Dimensions.get('screen');
 const ANIMATION_DURATION = 120;
 
-const FriendsHeader = () => {
+const PeopleSearch = ({searchHint, searchResultsStyle, onSearchClick}) => {
   const navigation = useNavigation();
   const [searchText, setSearchText] = useState(null);
   const [searchResults, setSearchResults] = useState([]);
@@ -52,15 +53,11 @@ const FriendsHeader = () => {
       setSearchResults([]);
     }
   };
-
-  const openProfile = item => {
-    navigation.navigate('socialProfile', {userInfo: item});
-  };
-
+  
   return (
     <>
       <SearchBar
-        placeholder="Type Here..."
+        placeholder={searchHint}
         onChangeText={updateSearch}
         value={searchText}
         lightTheme={true}
@@ -70,13 +67,12 @@ const FriendsHeader = () => {
         style={[
           styles.animatedView,
           {transform: [{translateX: showSearchView}]},
+          {...searchResultsStyle},
         ]}>
         <FlatList
           data={searchResults}
           renderItem={({item}) => (
-            <TouchableOpacity onPress={() => openProfile(item)}>
-              <FriendListItem friendInfo={item} />
-            </TouchableOpacity>
+            <FriendListItem friendInfo={item} onSearchClick={onSearchClick} />
           )}
           keyExtractor={(item, index) => item.uid}
         />
@@ -96,4 +92,12 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
 });
-export default FriendsHeader;
+PeopleSearch.propTypes = {
+  searchHint: PropTypes.string,
+  searchResultsStyle: PropTypes.object,
+  onSearchClick: PropTypes.func,
+};
+PeopleSearch.defaultProps = {
+  searchHint: 'Search People!',
+};
+export default PeopleSearch;

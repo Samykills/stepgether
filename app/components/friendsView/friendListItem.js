@@ -4,18 +4,20 @@ import {Divider} from 'react-native-elements';
 import StepgetherAvatar from '../common/stepgetherAvatar';
 import PropTypes from 'prop-types';
 import {useNavigation} from '@react-navigation/native';
-import {COLOR_BLUE} from '../../theme/colors';
-const FriendListItem = ({friendInfo}) => {
+import COLORS from '../../theme/colors';
+const FriendListItem = ({friendInfo, onSearchClick}) => {
   const navigation = useNavigation();
 
   const navigateToSocialProfile = () => {
-    navigation.navigate('socialProfile', {userInfo: friendInfo});
+    onSearchClick
+      ? onSearchClick(friendInfo)
+      : navigation.navigate('socialProfile', {userInfo: friendInfo});
   };
 
   return (
     <TouchableHighlight
       onPress={navigateToSocialProfile}
-      underlayColor={COLOR_BLUE}>
+      underlayColor={COLORS.BLUE}>
       <>
         <Divider />
         <View style={[styles.container]}>
@@ -46,6 +48,7 @@ const styles = StyleSheet.create({
 });
 FriendListItem.propTypes = {
   friendInfo: PropTypes.object,
+  onSearchClick: PropTypes.func,
 };
 
 export default FriendListItem;
