@@ -94,5 +94,9 @@
   <string>Stepgether would like to use your camera</string>
   <key>NSPhotoLibraryAddUsageDescription</key>
   <string>Stepgether would like to save photos to your photo gallery</string>
+  <key>NSLocationWhenInUseUsageDescription</key>
+  <string>Stepgether needs your location to tag the places you visited.</string>
+  <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+  <string>Stepgether needs your location to tag the places you visited.</string>
 </dict>
 </plist>

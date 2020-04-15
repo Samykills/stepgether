@@ -1,9 +1,11 @@
 import React, {useState, useLayoutEffect} from 'react';
 import {View, Dimensions, Image, StyleSheet, FlatList} from 'react-native';
-import {Divider, Input, Button, Text, Badge} from 'react-native-elements';
+import {Divider, Input, Button} from 'react-native-elements';
 import {useNavigation} from '@react-navigation/native';
+import Snackbar from 'react-native-snackbar';
 import PeopleSearch from '../friendsView/peopleSearch';
 import Chip from '../common/chip';
+import AddLocation from '../common/addLocation';
 
 const {height, width} = Dimensions.get('screen');
 
@@ -12,7 +14,7 @@ const CreatePostView = props => {
   const [post, setPost] = useState({
     fileUri: fileUri,
     tags: [],
-    location: '',
+    location: null,
     postBody: '',
   });
   const navigation = useNavigation();
@@ -20,14 +22,21 @@ const CreatePostView = props => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <Button
-          type="clear"
-          onPress={() => alert('Share pressed')}
-          title="Share"
-        />
+        <Button type="clear" onPress={onPressShare} title="Share" />
       ),
     });
   }, []);
+
+  const onPressShare = () => {
+    //if fileUri & postBody present
+    if (post.fileUri && post.postBody) {
+    } else {
+      Snackbar.show({
+        text: 'Write something first!',
+        duration: Snackbar.LENGTH_SHORT,
+      });
+    }
+  };
 
   const onSearchClick = item => {
     let tags = post.tags;
@@ -55,38 +64,36 @@ const CreatePostView = props => {
     setPost({...post, tags: tags});
   };
 
+  const onUserLocationSelection = place => {
+    setPost({...post, location: place});
+  };
+
+  const onLocationChipPress = () => {
+    setPost({...post, location: null});
+  };
+
   return (
     <View style={[styles.container]}>
-      <View style={{flexDirection: 'row', padding: 10, alignItems: 'center'}}>
-        <Image
-          style={{width: width * 0.2, height: height * 0.1}}
-          source={{uri: fileUri}}
-        />
+      <View style={[styles.postContainer]}>
+        <Image style={[styles.image]} source={{uri: fileUri}} />
         <Input placeholder="Write a caption..." />
       </View>
       <Divider />
       <PeopleSearch
         searchHint={'Tag People'}
-        searchResultsStyle={{top: 175}}
+        searchResultsStyle={styles.searchStyle}
         onSearchClick={onSearchClick}
       />
       <Divider />
       {post.tags.length > 0 ? (
         <>
-          <View
-            style={{
-              height: 50,
-            }}>
+          <View style={[styles.tags]}>
             <FlatList
               horizontal
               data={post.tags}
               keyExtractor={(item, index) => item.uid}
               renderItem={({item}) => (
-                <View
-                  style={{
-                    padding: 5,
-                    justifyContent: 'center',
-                  }}>
+                <View style={[styles.chipContainer]}>
                   <Chip value={item.displayName} onPress={onChipPress} />
                 </View>
               )}
@@ -95,20 +102,13 @@ const CreatePostView = props => {
           <Divider />
         </>
       ) : null}
-      <View style={{flexDirection: 'row', padding: 10}}>
-        <Button
-          title="Add Location"
-          type="clear"
-          raised={false}
-          titleStyle={{color: 'black'}}
-          buttonStyle={{borderColor: 'black'}}
-          icon={{
-            name: 'location-pin',
-            size: 20,
-            color: 'black',
-            type: 'entypo',
-          }}
-        />
+      <View style={[styles.locationContainer]}>
+        <AddLocation onPress={onUserLocationSelection} />
+        {post.location ? (
+          <View style={[styles.chipContainer]}>
+            <Chip value={post.location.name} onPress={onLocationChipPress} />
+          </View>
+        ) : null}
       </View>
       <Divider />
     </View>
@@ -117,6 +117,18 @@ const CreatePostView = props => {
 
 const styles = StyleSheet.create({
   container: {flex: 1},
+  image: {width: width * 0.2, height: height * 0.1},
+  postContainer: {flexDirection: 'row', padding: 10, alignItems: 'center'},
+  tags: {
+    height: 50,
+  },
+  searchStyle: {top: 175},
+  chipContainer: {padding: 8, justifyContent: 'center'},
+  locationContainer: {
+    flexDirection: 'row',
+    padding: 10,
+    justifyContent: 'space-between',
+  },
 });
 
 export default CreatePostView;
