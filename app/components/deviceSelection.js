@@ -4,7 +4,7 @@ import {Button} from 'react-native-elements';
 import {inject} from 'mobx-react';
 import {Fitbit_Init} from '../healthKits/fitbitKit';
 import {DeviceConstants} from '../constants';
-import {saveSelectedDeviceToken} from '../firestore/firestoreFunctions';
+import {saveSelectedDeviceToken} from '../firestore/userCollectionFirestoreFunctions';
 
 const DeviceSelection = ({AuthStore}) => {
   const {setSelectedDeviceToken} = AuthStore;

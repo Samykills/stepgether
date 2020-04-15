@@ -3,7 +3,7 @@ import {SafeAreaView, View, StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
 import ProfileHeader from './profileHeader';
 import ProfileBody from './profileBody';
-import {getUserInfo} from '../../../firestore/firestoreFunctions';
+import {getUserInfo} from '../../../firestore/userCollectionFirestoreFunctions';
 const SocialProfile = props => {
   const {userInfo} = props.route.params;
   const [userProfile, setUserProfile] = useState(null);

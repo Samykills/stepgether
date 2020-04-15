@@ -7,7 +7,7 @@ import {useNavigation} from '@react-navigation/native';
 import {
   declineAFollowRequest,
   acceptAFollowRequest,
-} from '../../firestore/firestoreFunctions';
+} from '../../firestore/userCollectionFirestoreFunctions';
 import COLORS from '../../theme/colors';
 
 const NewFriendsListItem = ({friendInfo}) => {

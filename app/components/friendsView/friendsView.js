@@ -7,7 +7,7 @@ import ErrorView from '../error';
 import {
   subscribeToNewFollowersRequestCollection,
   subscribeToFollowersListCollection,
-} from '../../firestore/firestoreFunctions';
+} from '../../firestore/userCollectionFirestoreFunctions';
 const FriendsView = () => {
   const [newRequest, setNewRequest] = useState([]);
   const [followersList, setFollowersList] = useState([]);

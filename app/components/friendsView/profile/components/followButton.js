@@ -7,7 +7,7 @@ import {
   getNewFollowersRequest,
   deleteCurrentUsersFollowRequest,
   unFollowAUser,
-} from '../../../../firestore/firestoreFunctions';
+} from '../../../../firestore/userCollectionFirestoreFunctions';
 import auth from '@react-native-firebase/auth';
 
 const FollowButton = ({userId}) => {
