@@ -1,23 +1,23 @@
 import React, {useState, useLayoutEffect} from 'react';
 import {View, Dimensions, Image, StyleSheet, FlatList} from 'react-native';
 import {Divider, Input, Button} from 'react-native-elements';
-import {useNavigation} from '@react-navigation/native';
 import Snackbar from 'react-native-snackbar';
 import PeopleSearch from '../friendsView/peopleSearch';
 import Chip from '../common/chip';
 import AddLocation from '../common/addLocation';
+import {savePostToCollection} from '../../firestore/postCollectionFirestoreFunctions';
 
 const {height, width} = Dimensions.get('screen');
 
 const CreatePostView = props => {
   const {fileUri} = props.route.params;
   const [post, setPost] = useState({
-    fileUri: fileUri,
+    postPhotoUrl: fileUri,
     tags: [],
     location: null,
     postBody: '',
   });
-  const navigation = useNavigation();
+  const navigation = props.navigation;
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -25,11 +25,14 @@ const CreatePostView = props => {
         <Button type="clear" onPress={onPressShare} title="Share" />
       ),
     });
-  }, []);
+  }, [post]);
 
   const onPressShare = () => {
-    //if fileUri & postBody present
-    if (post.fileUri && post.postBody) {
+    //if postPhotoUrl & postBody present
+    if (post.postPhotoUrl && post.postBody) {
+      savePostToCollection(post).then(res => {
+        navigation.goBack();
+      });
     } else {
       Snackbar.show({
         text: 'Write something first!',
@@ -49,12 +52,18 @@ const CreatePostView = props => {
       i++;
     }
     if (!ifItemInList) {
-      tags.push(item);
+      let taggedUserInfo = {
+        uid: item.uid,
+        emailId: item.emailId,
+        displayName: item.displayName,
+        photoUrl: item.photoUrl,
+      };
+      tags.push(taggedUserInfo);
       setPost({...post, tags: tags});
     }
   };
 
-  const onChipPress = value => {
+  const onUserChipPress = value => {
     let tags = post.tags;
     let i = 0;
     while (tags[i].displayName !== value) {
@@ -65,18 +74,33 @@ const CreatePostView = props => {
   };
 
   const onUserLocationSelection = place => {
-    setPost({...post, location: place});
+    let locationObj = {
+      name: place.name,
+      address: place.address,
+      location: place.location,
+    };
+    setPost({...post, location: locationObj});
   };
 
   const onLocationChipPress = () => {
     setPost({...post, location: null});
   };
 
+  const onChangeCaption = text => {
+    setPost({...post, postBody: text});
+  };
+
   return (
     <View style={[styles.container]}>
       <View style={[styles.postContainer]}>
-        <Image style={[styles.image]} source={{uri: fileUri}} />
-        <Input placeholder="Write a caption..." />
+        <Image style={[styles.image]} source={{uri: post.postPhotoUrl}} />
+        <Input
+          placeholder="Write a caption..."
+          autoFocus={false}
+          autoCorrect={false}
+          autoCompleteType={'off'}
+          onChangeText={onChangeCaption}
+        />
       </View>
       <Divider />
       <PeopleSearch
@@ -94,7 +118,7 @@ const CreatePostView = props => {
               keyExtractor={(item, index) => item.uid}
               renderItem={({item}) => (
                 <View style={[styles.chipContainer]}>
-                  <Chip value={item.displayName} onPress={onChipPress} />
+                  <Chip value={item.displayName} onPress={onUserChipPress} />
                 </View>
               )}
             />

@@ -5,34 +5,34 @@ import PropTypes from 'prop-types';
 import PostCardFooter from './postCardFooter';
 const PostCard = ({post}) => {
   const {
-    id,
-    name,
-    photoUrl,
-    postedOn,
-    postImageUrl,
-    postText,
+    postId,
+    createdByUserDisplayName,
+    createdByUserPhotoUrl,
+    modifiedAt,
+    postPhotoUrl,
+    postBody,
     likes,
     comments,
-    likedByUser,
+    likedByUser = false,
   } = post;
   return (
     <View style={[styles.container]}>
       <CardTitle
-        name={name}
-        photoUrl={photoUrl}
-        postedOn={postedOn}
+        name={createdByUserDisplayName}
+        photoUrl={createdByUserPhotoUrl}
+        postedOn={modifiedAt.toDate().toString()}
       />
       <Image
-        source={{uri: postImageUrl}}
+        source={{uri: postPhotoUrl}}
         style={[styles.imageStyle]}
         resizeMode={'cover'}
         resizeMethod={'scale'}
       />
       <View style={[styles.textViewStyle]}>
-        <Text>{postText}</Text>
+        <Text>{postBody}</Text>
       </View>
       <PostCardFooter
-        postId={id}
+        postId={postId}
         likes={likes}
         comments={comments}
         likedByUser={likedByUser}
@@ -40,11 +40,13 @@ const PostCard = ({post}) => {
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   container: {flex: 1, backgroundColor: '#FFFFFFFF'},
   imageStyle: {height: 350},
   textViewStyle: {padding: 10},
 });
+
 PostCard.propTypes = {
   post: PropTypes.object,
 };

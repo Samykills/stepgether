@@ -8,10 +8,14 @@ import {
   subscribeToNewFollowersRequestCollection,
   subscribeToFollowersListCollection,
 } from '../../firestore/userCollectionFirestoreFunctions';
-const FriendsView = () => {
+import {inject} from 'mobx-react';
+
+const FriendsView = ({AuthStore}) => {
   const [newRequest, setNewRequest] = useState([]);
   const [followersList, setFollowersList] = useState([]);
   const [loadingFailed, setLoadingFailed] = useState(false);
+  const {setUserFollowersList} = AuthStore;
+
   useEffect(() => {
     const subscribeNewFollowers = subscribeToNewFollowersRequestCollection().onSnapshot(
       snapshot => {
@@ -36,6 +40,7 @@ const FriendsView = () => {
         snapshot.forEach(doc => {
           followersArr.push(doc.data());
         });
+        setUserFollowersList(followersArr);
         setFollowersList(followersArr);
       },
       error => {
@@ -60,7 +65,7 @@ const styles = StyleSheet.create({
   container: {flex: 1, backgroundColor: 'white'},
 });
 
-export default FriendsView;
+export default inject('AuthStore')(FriendsView);
 
 const Data = {
   newFriendRequests: [
