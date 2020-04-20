@@ -10,6 +10,9 @@
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
+#import "SDImageCodersManager.h"
+#import <SDWebImageWebPCoder/SDImageWebPCoder.h>
+
 @import GooglePlaces;
 @import GoogleMaps;
 
@@ -34,6 +37,7 @@
   }
   [GMSPlacesClient provideAPIKey:@"AIzaSyCrQ86eayIJRgvULerXdDcu7upOGLx3F6w"];
   [GMSServices provideAPIKey:@"AIzaSyCrQ86eayIJRgvULerXdDcu7upOGLx3F6w"];
+  [SDImageCodersManager.sharedManager addCoder:SDImageWebPCoder.sharedCoder];
   return YES;
 }
 

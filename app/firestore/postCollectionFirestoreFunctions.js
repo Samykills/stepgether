@@ -42,7 +42,7 @@ export const savePostToCollection = async postData => {
   postData.createdByUserDisplayName = auth().currentUser.displayName;
   postData.createdByUserPhotoUrl = auth().currentUser.photoURL;
   // save file to cloud storage here.
-  const reference = storage().ref(`stepgether-${new Date().getTime()}.png`);
+  const reference = storage().ref(`stepgether-${new Date().getTime()}`);
   await reference.putFile(postData.postPhotoUrl);
   postData.postPhotoUrl = await reference.getDownloadURL();
   //save the post to firestore.

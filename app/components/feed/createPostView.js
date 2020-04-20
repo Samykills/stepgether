@@ -1,11 +1,12 @@
 import React, {useState, useLayoutEffect} from 'react';
-import {View, Dimensions, Image, StyleSheet, FlatList} from 'react-native';
+import {View, Dimensions, StyleSheet, FlatList} from 'react-native';
 import {Divider, Input, Button} from 'react-native-elements';
 import Snackbar from 'react-native-snackbar';
 import PeopleSearch from '../friendsView/peopleSearch';
 import Chip from '../common/chip';
 import AddLocation from '../common/addLocation';
 import {savePostToCollection} from '../../firestore/postCollectionFirestoreFunctions';
+import FastImage from 'react-native-fast-image';
 
 const {height, width} = Dimensions.get('screen');
 
@@ -93,7 +94,7 @@ const CreatePostView = props => {
   return (
     <View style={[styles.container]}>
       <View style={[styles.postContainer]}>
-        <Image style={[styles.image]} source={{uri: post.postPhotoUrl}} />
+        <FastImage style={[styles.image]} source={{uri: post.postPhotoUrl}} />
         <Input
           placeholder="Write a caption..."
           autoFocus={false}

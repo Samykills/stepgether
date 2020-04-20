@@ -1,5 +1,5 @@
 import React from 'react';
-import {View} from 'react-native';
+import {View, Alert} from 'react-native';
 import {Icon} from 'react-native-elements';
 import COLORS from '../../../theme/colors';
 import ImagePicker from 'react-native-image-picker';
@@ -21,7 +21,6 @@ const CreatePostButton = () => {
       noData: true,
     };
     ImagePicker.showImagePicker(options, response => {
-      console.log('Response = ', response);
       if (response.didCancel) {
         console.log('User cancelled image picker');
       } else if (response.error) {
@@ -31,27 +30,29 @@ const CreatePostButton = () => {
           response.width < IMAGE_WIDTH ? response.width : IMAGE_WIDTH;
         const resizeImageHeight =
           response.height < IMAGE_HEIGHT ? response.height : IMAGE_HEIGHT;
-        ImageResizer.createResizedImage(
-          response.uri,
-          resizeImageWidth,
-          resizeImageHeight,
-          'PNG',
-          80,
-        )
-          .then(response => {
-            navigation.navigate('createPostView', {fileUri: response.uri});
-            // response.uri is the URI of the new image that can now be displayed, uploaded...
-            // response.path is the path of the new image
-            // response.name is the name of the new image with the extension
-            // response.size is the size of the new image
-          })
-          .catch(err => {
-            navigation.navigate('createPostView', {fileUri: response.uri});
-            // Oops, something went wrong. Check that the filename is correct and
-            // inspect err to get more details.
-          });
-        // You can also display the image using data:
-        // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+        if (response.type) {
+          ImageResizer.createResizedImage(
+            response.uri,
+            resizeImageWidth,
+            resizeImageHeight,
+            'WEBP',
+            80,
+          )
+            .then(res => {
+              navigation.navigate('createPostView', {fileUri: res.uri});
+              // response.uri is the URI of the new image that can now be displayed, uploaded...
+              // response.path is the path of the new image
+              // response.name is the name of the new image with the extension
+              // response.size is the size of the new image
+            })
+            .catch(err => {
+              navigation.navigate('createPostView', {fileUri: response.uri});
+              // Oops, something went wrong. Check that the filename is correct and
+              // inspect err to get more details.
+            });
+        } else {
+          Alert.alert('', 'Aah this file type is not supported!');
+        }
       }
     });
   };

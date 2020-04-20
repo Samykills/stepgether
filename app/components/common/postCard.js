@@ -1,8 +1,9 @@
 import React from 'react';
-import {View, Text, Image, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import CardTitle from './cardTitle';
 import PropTypes from 'prop-types';
 import PostCardFooter from './postCardFooter';
+import FastImage from 'react-native-fast-image';
 
 const PostCard = ({post}) => {
   const {
@@ -24,12 +25,7 @@ const PostCard = ({post}) => {
         photoUrl={createdByUserPhotoUrl}
         postedOn={modifiedAt.toDate().toString()}
       />
-      <Image
-        source={{uri: postPhotoUrl}}
-        style={[styles.imageStyle]}
-        resizeMode={'cover'}
-        resizeMethod={'scale'}
-      />
+      <FastImage source={{uri: postPhotoUrl}} style={[styles.imageStyle]} />
       <View style={[styles.textViewStyle]}>
         <Text>{postBody}</Text>
       </View>

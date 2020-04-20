@@ -1,17 +1,17 @@
 import React from 'react';
-import {View, Image, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
 import StepgetherAvatar from '../../common/stepgetherAvatar';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
+import FastImage from 'react-native-fast-image';
 
 const profileBackgroundImage =
   'http://new-cloudfront.zekkei-japan.jp/images/articles/871fd7574601ff2ada79c8fbb07e4917.jpg';
 const ProfileHeader = ({userInfo}) => {
   return (
     <View>
-      <Image
+      <FastImage
         style={[styles.headerImage]}
-        resizeMode={'cover'}
         source={{uri: profileBackgroundImage}}
       />
 
