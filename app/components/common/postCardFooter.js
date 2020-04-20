@@ -1,7 +1,7 @@
 import React, {useReducer} from 'react';
 import {View, StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
-import {Icon, Button} from 'react-native-elements';
+import {Icon, Button, Divider} from 'react-native-elements';
 import {useNavigation} from '@react-navigation/native';
 const LIKE = 'LIKE';
 const PostCardFooter = ({postId, likes, comments, likedByUser}) => {
@@ -46,23 +46,26 @@ const PostCardFooter = ({postId, likes, comments, likedByUser}) => {
   };
 
   return (
-    <View style={[styles.container]}>
-      <FooterIcon
-        value={state.likes}
-        iconName={state.likedByUser ? 'like1' : 'like2'}
-        iconType={'antdesign'}
-        iconColor={state.likedByUser ? '#2196F3' : 'grey'}
-        onPress={likeClicked}
-      />
-      <View style={[styles.divider]} />
-      <FooterIcon
-        value={comments}
-        iconName={'chat'}
-        iconType={'material'}
-        iconColor={'grey'}
-        onPress={openCommentsView}
-      />
-    </View>
+    <>
+      <Divider />
+      <View style={[styles.container]}>
+        <FooterIcon
+          value={state.likes}
+          iconName={state.likedByUser ? 'like1' : 'like2'}
+          iconType={'antdesign'}
+          iconColor={state.likedByUser ? '#2196F3' : 'grey'}
+          onPress={likeClicked}
+        />
+        <View style={[styles.divider]} />
+        <FooterIcon
+          value={comments}
+          iconName={'chat'}
+          iconType={'material'}
+          iconColor={'grey'}
+          onPress={openCommentsView}
+        />
+      </View>
+    </>
   );
 };
 

@@ -6,8 +6,8 @@ import ImagePicker from 'react-native-image-picker';
 import ImageResizer from 'react-native-image-resizer';
 import {useNavigation} from '@react-navigation/native';
 
-const IMAGE_WIDTH = 1280;
-const IMAGE_HEIGHT = 720;
+const IMAGE_WIDTH = 1080;
+const IMAGE_HEIGHT = 566;
 
 const CreatePostButton = () => {
   const navigation = useNavigation();
@@ -27,10 +27,14 @@ const CreatePostButton = () => {
       } else if (response.error) {
         console.log('ImagePicker Error: ', response.error);
       } else {
+        const resizeImageWidth =
+          response.width < IMAGE_WIDTH ? response.width : IMAGE_WIDTH;
+        const resizeImageHeight =
+          response.height < IMAGE_HEIGHT ? response.height : IMAGE_HEIGHT;
         ImageResizer.createResizedImage(
           response.uri,
-          IMAGE_WIDTH,
-          IMAGE_HEIGHT,
+          resizeImageWidth,
+          resizeImageHeight,
           'PNG',
           80,
         )

@@ -1,5 +1,6 @@
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
+import storage from '@react-native-firebase/storage';
 
 const POST_COLLECTION = 'posts';
 // firestore().settings({
@@ -32,7 +33,7 @@ export const getAllPost = followersList => {
     });
 };
 
-export const savePostToCollection = postData => {
+export const savePostToCollection = async postData => {
   postData.createdAt = firestore.FieldValue.serverTimestamp();
   postData.modifiedAt = firestore.FieldValue.serverTimestamp();
   postData.likes = 0;
@@ -40,6 +41,11 @@ export const savePostToCollection = postData => {
   postData.createdBy = auth().currentUser.uid;
   postData.createdByUserDisplayName = auth().currentUser.displayName;
   postData.createdByUserPhotoUrl = auth().currentUser.photoURL;
+  // save file to cloud storage here.
+  const reference = storage().ref(`stepgether-${new Date().getTime()}.png`);
+  await reference.putFile(postData.postPhotoUrl);
+  postData.postPhotoUrl = await reference.getDownloadURL();
+  //save the post to firestore.
   return firestore()
     .collection(POST_COLLECTION)
     .add(postData)

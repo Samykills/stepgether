@@ -1132,6 +1132,11 @@
   resolved "https://registry.yarnpkg.com/@react-native-firebase/functions/-/functions-6.4.0.tgz#0b69925e48230be6eed70707024b23eb814f18c4"
   integrity sha512-CQ1Xkrci80ZOTF/vDdOilEiczwAkeuiA2vbGbHx7AFgVL7w5Ifk5QFjr4whN4vpy9VYN2fUy0slLQ+pKmpANaQ==
 
+"@react-native-firebase/storage@^6.4.0":
+  version "6.4.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/storage/-/storage-6.4.0.tgz#6b1310fa17efa10c585eab92e8b84ff1a9f4780a"
+  integrity sha512-Iqe2qgoJTOyRkH5AjPHGqysb3AVY3HmG/AUA51fm4xTCzMJBg3S9RIniIRaeq5sBxYGdRSQPXThZiMPCVhSBIA==
+
 "@react-navigation/bottom-tabs@^5.0.6":
   version "5.0.6"
   resolved "https://registry.yarnpkg.com/@react-navigation/bottom-tabs/-/bottom-tabs-5.0.6.tgz#aa282233d87c39f7414dcd5030d93465febcb0b9"

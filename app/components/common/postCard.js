@@ -3,6 +3,7 @@ import {View, Text, Image, StyleSheet} from 'react-native';
 import CardTitle from './cardTitle';
 import PropTypes from 'prop-types';
 import PostCardFooter from './postCardFooter';
+
 const PostCard = ({post}) => {
   const {
     postId,
@@ -15,6 +16,7 @@ const PostCard = ({post}) => {
     comments,
     likedByUser = false,
   } = post;
+
   return (
     <View style={[styles.container]}>
       <CardTitle
