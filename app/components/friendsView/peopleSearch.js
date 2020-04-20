@@ -53,7 +53,15 @@ const PeopleSearch = ({searchHint, searchResultsStyle, onSearchClick}) => {
       setSearchResults([]);
     }
   };
-  
+
+  const dismissSearchResultsAndExecuteCallback = friendInfo => {
+    setSearchText(null);
+    setSearchResults([]);
+    onSearchClick
+      ? onSearchClick(friendInfo)
+      : navigation.navigate('socialProfile', {userInfo: friendInfo});
+  };
+
   return (
     <>
       <SearchBar
@@ -72,7 +80,10 @@ const PeopleSearch = ({searchHint, searchResultsStyle, onSearchClick}) => {
         <FlatList
           data={searchResults}
           renderItem={({item}) => (
-            <FriendListItem friendInfo={item} onSearchClick={onSearchClick} />
+            <FriendListItem
+              friendInfo={item}
+              onSearchClick={dismissSearchResultsAndExecuteCallback}
+            />
           )}
           keyExtractor={(item, index) => item.uid}
         />
