@@ -23,7 +23,7 @@ const PostCard = ({post}) => {
       <CardTitle
         name={createdByUserDisplayName}
         photoUrl={createdByUserPhotoUrl}
-        postedOn={modifiedAt.toDate().toString()}
+        postedOn={modifiedAt}
       />
       <FastImage source={{uri: postPhotoUrl}} style={[styles.imageStyle]} />
       <View style={[styles.textViewStyle]}>
