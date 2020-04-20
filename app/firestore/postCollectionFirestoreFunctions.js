@@ -9,18 +9,21 @@ const POST_COLLECTION = 'posts';
 
 export const getAllPost = followersList => {
   //add current user to followersList again
-  followersList.push(auth().currentUser.uid);
+  //TODO : optimize and add pagination for post queries.
+  let fl = followersList;
+  fl.push(auth().currentUser.uid);
   return firestore()
     .collection(POST_COLLECTION)
-    .where('createdBy', 'in', followersList)
     .orderBy('modifiedAt', 'desc')
     .get()
     .then(querySnapshot => {
       let postList = [];
       querySnapshot.forEach(snapShot => {
-        let postData = snapShot.data();
-        postData.postId = snapShot.id;
-        postList.push(postData);
+        let post = snapShot.data();
+        if (fl.includes(post.createdBy)) {
+          post.postId = snapShot.id;
+          postList.push(post);
+        }
       });
       return postList;
     })
