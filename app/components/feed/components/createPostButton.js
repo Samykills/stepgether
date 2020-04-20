@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Alert} from 'react-native';
+import {View, Alert, Platform} from 'react-native';
 import {Icon} from 'react-native-elements';
 import COLORS from '../../../theme/colors';
 import ImagePicker from 'react-native-image-picker';
@@ -8,6 +8,8 @@ import {useNavigation} from '@react-navigation/native';
 
 const IMAGE_WIDTH = 1080;
 const IMAGE_HEIGHT = 566;
+const IMAGE_TYPE_WEBP = 'WEBP';
+const IMAGE_TYPE_PNG = 'PNG';
 
 const CreatePostButton = () => {
   const navigation = useNavigation();
@@ -35,7 +37,7 @@ const CreatePostButton = () => {
             response.uri,
             resizeImageWidth,
             resizeImageHeight,
-            'WEBP',
+            Platform.OS == 'ios' ? IMAGE_TYPE_PNG : IMAGE_TYPE_WEBP,
             80,
           )
             .then(res => {
