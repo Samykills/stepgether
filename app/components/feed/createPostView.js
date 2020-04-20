@@ -95,13 +95,15 @@ const CreatePostView = props => {
     <View style={[styles.container]}>
       <View style={[styles.postContainer]}>
         <FastImage style={[styles.image]} source={{uri: post.postPhotoUrl}} />
-        <Input
-          placeholder="Write a caption..."
-          autoFocus={false}
-          autoCorrect={false}
-          autoCompleteType={'off'}
-          onChangeText={onChangeCaption}
-        />
+        <View style={[styles.inputStyle]}>
+          <Input
+            placeholder="Write a caption..."
+            autoFocus={false}
+            autoCorrect={false}
+            autoCompleteType={'off'}
+            onChangeText={onChangeCaption}
+          />
+        </View>
       </View>
       <Divider />
       <PeopleSearch
@@ -153,6 +155,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: 10,
     justifyContent: 'space-between',
+  },
+  inputStyle: {
+    width: '80%',
   },
 });
 
