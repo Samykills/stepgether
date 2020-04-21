@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 import PostCardFooter from './postCardFooter';
 import FastImage from 'react-native-fast-image';
 import {modifyPostInCollection} from '../../firestore/postCollectionFirestoreFunctions';
+import TagList from '../common/tagList';
+
 const PostCard = ({post}) => {
   const {
     postId,
@@ -28,6 +30,7 @@ const PostCard = ({post}) => {
       {text: 'Yes', onPress: () => modifyPostInCollection(post)},
     ]);
   };
+
   return (
     <View style={[styles.container]}>
       <CardTitle
@@ -39,6 +42,7 @@ const PostCard = ({post}) => {
       />
       <FastImage source={{uri: postPhotoUrl}} style={[styles.imageStyle]} />
       <View style={[styles.textViewStyle]}>
+        <TagList tags={tags} />
         <Text>{postBody}</Text>
       </View>
       <PostCardFooter
