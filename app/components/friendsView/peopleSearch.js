@@ -2,7 +2,6 @@ import React, {useState, useEffect, useRef} from 'react';
 import {
   FlatList,
   Platform,
-  TouchableOpacity,
   Animated,
   Dimensions,
   StyleSheet,

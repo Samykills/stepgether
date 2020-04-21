@@ -20,7 +20,7 @@ export const algoliaSearchUsers = searchKey => {
   return index
     .search(searchKey)
     .then(function(responses) {
-      return responses.hits.filter(res => res.uid != auth().currentUser.uid);
+      return responses.hits.filter(res => res.uid !== auth().currentUser.uid);
     })
     .catch(err => {
       console.log(err);

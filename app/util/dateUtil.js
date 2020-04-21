@@ -17,7 +17,7 @@ export const dateFormatPost = date => {
     const differenceHour = differenceDateObj.getHours();
     const differenceMinutes = differenceDateObj.getMinutes();
     const differenceSeconds = differenceDateObj.getSeconds();
-    if (differenceDays == 1) {
+    if (differenceDays === 1) {
       if (differenceHour < 2) {
         if (differenceMinutes < 2) {
           return differenceSeconds + ' seconds ago';
@@ -27,7 +27,7 @@ export const dateFormatPost = date => {
       } else {
         return differenceHour + ' hours ago';
       }
-    } else if (differenceMinutes == 2) {
+    } else if (differenceMinutes === 2) {
       return `Yesterday, ${dateObj.getHours()}:${dateObj.getMinutes()}`;
     } else {
       return dateObj.toLocalString();

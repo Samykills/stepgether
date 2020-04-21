@@ -59,7 +59,7 @@ const FollowButton = ({userId}) => {
       getNewFollowersRequest(userId),
     ]).then(res => {
       if (res[1]) {
-        if (res.filter(item => item.uid == auth().currentUser.uid).length > 0) {
+        if (res.filter(item => item.uid === auth().currentUser.uid).length > 0) {
           setState({isFollower: res[0], isRequested: true, isLoading: false});
         } else {
           setState({isFollower: res[0], isRequested: false, isLoading: false});

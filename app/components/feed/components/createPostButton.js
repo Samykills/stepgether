@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Alert, Platform} from 'react-native';
+import {View, Alert, Platform, StyleSheet} from 'react-native';
 import {Icon} from 'react-native-elements';
 import COLORS from '../../../theme/colors';
 import ImagePicker from 'react-native-image-picker';
@@ -37,7 +37,7 @@ const CreatePostButton = () => {
             response.uri,
             resizeImageWidth,
             resizeImageHeight,
-            Platform.OS == 'ios' ? IMAGE_TYPE_PNG : IMAGE_TYPE_WEBP,
+            Platform.OS === 'ios' ? IMAGE_TYPE_PNG : IMAGE_TYPE_WEBP,
             80,
           )
             .then(res => {
@@ -59,12 +59,7 @@ const CreatePostButton = () => {
     });
   };
   return (
-    <View
-      style={{
-        position: 'absolute',
-        bottom: '1%',
-        right: '3%',
-      }}>
+    <View style={[styles.container]}>
       <Icon
         reverse
         raised
@@ -77,4 +72,11 @@ const CreatePostButton = () => {
   );
 };
 
+const styles = StyleSheet.create({
+  container: {
+    position: 'absolute',
+    bottom: '1%',
+    right: '3%',
+  },
+});
 export default CreatePostButton;

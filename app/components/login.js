@@ -62,7 +62,7 @@ const Login = () => {
   };
 
   let appleSignInButton = null;
-  if (Platform.OS == 'ios' && parseInt(Platform.Version) >= '13') {
+  if (Platform.OS === 'ios' && parseInt(Platform.Version) >= '13') {
     appleSignInButton = (
       <AppleButton
         style={[styles.appleButton]}

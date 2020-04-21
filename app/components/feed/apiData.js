@@ -36,8 +36,7 @@ const Data = {
     {
       id: 1,
       name: 'Steve Siano',
-      photoUrl:
-        'https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg',
+      photoUrl: 'https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg',
       postImageUrl:
         'http://i.huffpost.com/gen/1011372/images/o-FITNESS-TRACKER-facebook.jpg',
       postText: 'Jogg for a mile a day, keep the doctor away!',
@@ -62,8 +61,7 @@ const Data = {
     {
       id: 3,
       name: 'Gregory Richardson',
-      photoUrl:
-        'https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg',
+      photoUrl: 'https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg',
       postImageUrl: 'https://i.ytimg.com/vi/gFyxKN58wA0/maxresdefault.jpg',
       postText: 'Had a great shoulder day, time to work on my arms!',
       postedOn: '12th March 2020 22:23 PM',

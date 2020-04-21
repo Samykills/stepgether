@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, Alert} from 'react-native';
 import StepgetherAvatar from './stepgetherAvatar';
 
 const SelfStoryComponent = ({story}) => {
@@ -10,7 +10,7 @@ const SelfStoryComponent = ({story}) => {
           avatarType={story.userImageUrl}
           size={55}
           title={story.userName}
-          onEditPress={() => alert('story')}
+          onEditPress={() => Alert.alert('story')}
         />
         <Text style={[styles.textStyle]}>{story.userName}</Text>
       </View>

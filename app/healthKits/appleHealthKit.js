@@ -1,3 +1,4 @@
+import { Alert } from 'react-native';
 import AppleHealthKit from 'rn-apple-healthkit';
 const PERMS = AppleHealthKit.Constants.Permissions;
 
@@ -19,10 +20,10 @@ export const Apple_GetSteps = () => {
     }
     AppleHealthKit.getStepCount({}, (error, countResults) => {
       if (error) {
-        alert('error:' + error);
+        Alert.alert('error:' + error);
         return;
       }
-      alert(`Steps for current day :${countResults.value}`);
+      Alert.alert(`Steps for current day :${countResults.value}`);
     });
   });
 };
