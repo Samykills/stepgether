@@ -18,22 +18,34 @@ const CreatePostView = props => {
     location: null,
     postBody: '',
   });
+  const [isLoading, setIsLoading] = useState(false);
   const navigation = props.navigation;
 
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <Button type="clear" onPress={onPressShare} title="Share" />
+        <Button
+          type="clear"
+          onPress={onPressShare}
+          title="Share"
+          disabled={isLoading}
+        />
       ),
     });
-  }, [post]);
+  }, [post, isLoading]);
 
   const onPressShare = () => {
     //if postPhotoUrl & postBody present
     if (post.postPhotoUrl && post.postBody) {
-      savePostToCollection(post).then(res => {
-        navigation.goBack();
-      });
+      setIsLoading(true);
+      savePostToCollection(post)
+        .then(res => {
+          setIsLoading(false);
+          navigation.goBack();
+        })
+        .catch(err => {
+          setIsLoading(false);
+        });
     } else {
       Snackbar.show({
         text: 'Write something first!',
