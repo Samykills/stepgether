@@ -62,7 +62,7 @@ const CreatePostButton = () => {
     <View
       style={{
         position: 'absolute',
-        bottom: '3%',
+        bottom: '1%',
         right: '3%',
       }}>
       <Icon
