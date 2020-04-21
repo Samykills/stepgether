@@ -38,6 +38,7 @@ export const savePostToCollection = async postData => {
   postData.createdAt = firestore.FieldValue.serverTimestamp();
   postData.modifiedAt = firestore.FieldValue.serverTimestamp();
   postData.likes = 0;
+  postData.likedByUsers = [];
   postData.comments = 0;
   postData.reports = 0;
   postData.reportedBy = [];
@@ -91,6 +92,31 @@ export const modifyPostInCollection = postData => {
       duration: Snackbar.LENGTH_SHORT,
     });
   }
+};
+
+export const likeAPost = postData => {
+  //if user already exists in likedByUsers array then unlike the post else like it
+  const currentUserId = auth().currentUser.uid;
+  if (postData.likedByUsers.includes(currentUserId)) {
+    postData.likes = postData.likes - 1;
+    const index = postData.likedByUsers.indexOf(currentUserId);
+    postData.likedByUsers.splice(index, 1);
+  } else {
+    postData.likes = postData.likes + 1;
+    postData.likedByUsers.push(currentUserId);
+  }
+  return firestore()
+    .collection(POST_COLLECTION)
+    .doc(postData.postId)
+    .set(postData, {merge: true})
+    .then(
+      res => {
+        return postData;
+      },
+      err => {
+        handleFirestoreError(err);
+      },
+    );
 };
 
 const handleFirestoreError = err => {

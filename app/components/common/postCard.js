@@ -9,17 +9,14 @@ import TagList from '../common/tagList';
 
 const PostCard = ({post}) => {
   const {
-    postId,
     createdByUserDisplayName,
     createdByUserPhotoUrl,
     modifiedAt,
     postPhotoUrl,
     postBody,
-    likes,
-    comments,
-    likedByUser = false,
     location,
     tags,
+    likes,
   } = post;
   const onRightIconPress = () => {
     Alert.alert('Report!', 'Does this post contains offensive content?', [
@@ -42,15 +39,11 @@ const PostCard = ({post}) => {
       />
       <FastImage source={{uri: postPhotoUrl}} style={[styles.imageStyle]} />
       <View style={[styles.textViewStyle]}>
+        {likes > 0 ? <Text style={[styles.likes]}>{likes} Likes</Text> : null}
         <TagList tags={tags} />
-        <Text>{postBody}</Text>
+        <Text style={[styles.body]}>{postBody}</Text>
       </View>
-      <PostCardFooter
-        postId={postId}
-        likes={likes}
-        comments={comments}
-        likedByUser={likedByUser}
-      />
+      <PostCardFooter post={post} />
     </View>
   );
 };
@@ -59,6 +52,12 @@ const styles = StyleSheet.create({
   container: {flex: 1, backgroundColor: '#FFFFFFFF'},
   imageStyle: {height: 350},
   textViewStyle: {padding: 10},
+  likes: {
+    fontSize: 10,
+  },
+  body: {
+    fontSize: 14,
+  },
 });
 
 PostCard.propTypes = {

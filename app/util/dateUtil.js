@@ -7,28 +7,35 @@
  * @param {FieldValue} date : Mon Apr 20 2020 23:09:33 GMT+0200 (Central European Summer Time)
  */
 export const dateFormatPost = date => {
-  const dateObj = date.toDate();
-  const currentDateObj = new Date();
-  const differenceDateObj = new Date(
-    currentDateObj.getTime() - dateObj.getTime(),
-  );
-  const differenceDays = differenceDateObj.getDate();
-  const differenceHour = differenceDateObj.getHours();
-  const differenceMinutes = differenceDateObj.getMinutes();
-  const differenceSeconds = differenceDateObj.getSeconds();
-  if (differenceDays == 1) {
-    if (differenceHour < 2) {
-      if (differenceMinutes < 2) {
-        return differenceSeconds + ' seconds ago';
+  try {
+    const dateObj = date.toDate();
+    const currentDateObj = new Date();
+    const differenceDateObj = new Date(
+      currentDateObj.getTime() - dateObj.getTime(),
+    );
+    const differenceDays = differenceDateObj.getDate();
+    const differenceHour = differenceDateObj.getHours();
+    const differenceMinutes = differenceDateObj.getMinutes();
+    const differenceSeconds = differenceDateObj.getSeconds();
+    if (differenceDays == 1) {
+      if (differenceHour < 2) {
+        if (differenceMinutes < 2) {
+          return differenceSeconds + ' seconds ago';
+        } else {
+          return differenceMinutes + ' minutes ago';
+        }
       } else {
-        return differenceMinutes + ' minutes ago';
+        return differenceHour + ' hours ago';
       }
+    } else if (differenceMinutes == 2) {
+      return `Yesterday, ${dateObj.getHours()}:${dateObj.getMinutes()}`;
     } else {
-      return differenceHour + ' hours ago';
+      return dateObj.toLocalString();
     }
-  } else if (differenceMinutes == 2) {
-    return `Yesterday, ${dateObj.getHours()}:${dateObj.getMinutes()}`;
-  } else {
-    return dateObj.toLocalString();
+  } catch (e) {
+    console.log('====================================');
+    console.log(e);
+    console.log('====================================');
+    // return null;
   }
 };
