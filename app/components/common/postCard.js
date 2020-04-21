@@ -31,7 +31,7 @@ const PostCard = ({post}) => {
   return (
     <View style={[styles.container]}>
       <CardTitle
-        name={createdByUserDisplayName}
+        displayName={createdByUserDisplayName}
         photoUrl={createdByUserPhotoUrl}
         postedOn={modifiedAt}
         location={location}

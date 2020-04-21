@@ -3,8 +3,15 @@ import {View, StyleSheet} from 'react-native';
 import {ListItem, Text, Icon} from 'react-native-elements';
 import PropTypes from 'prop-types';
 import {dateFormatPost} from '../../util/dateUtil';
+import COLORS from '../../theme/colors';
 
-const CardTitle = ({name, photoUrl, postedOn, location, onRightIconPress}) => {
+const CardTitle = ({
+  displayName,
+  photoUrl,
+  postedOn,
+  location,
+  onRightIconPress,
+}) => {
   const formattedDate = dateFormatPost(postedOn);
   const SubtitleComponent = () => {
     return (
@@ -20,9 +27,10 @@ const CardTitle = ({name, photoUrl, postedOn, location, onRightIconPress}) => {
   const RightIconComponent = () => {
     return (
       <Icon
+        size={16}
         name="dots-three-vertical"
         type="entypo"
-        color="#000000"
+        color={COLORS.BLACK}
         onPress={onRightIconPress}
       />
     );
@@ -33,7 +41,7 @@ const CardTitle = ({name, photoUrl, postedOn, location, onRightIconPress}) => {
       leftAvatar={
         photoUrl.includes('http') ? {source: {uri: photoUrl}} : {title: {name}}
       }
-      title={name}
+      title={displayName}
       subtitle={<SubtitleComponent />}
       bottomDivider
       rightIcon={<RightIconComponent />}
@@ -42,7 +50,7 @@ const CardTitle = ({name, photoUrl, postedOn, location, onRightIconPress}) => {
 };
 
 CardTitle.proptypes = {
-  name: PropTypes.string,
+  displayName: PropTypes.string,
   photoUrl: PropTypes.string,
   postedOn: PropTypes.object,
   location: PropTypes.object,

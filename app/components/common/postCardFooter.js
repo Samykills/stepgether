@@ -5,6 +5,7 @@ import {Icon, Button, Divider} from 'react-native-elements';
 import {useNavigation} from '@react-navigation/native';
 import {likeAPost} from '../../firestore/postCollectionFirestoreFunctions';
 import auth from '@react-native-firebase/auth';
+import COLORS from '../../theme/colors';
 
 const PostCardFooter = ({post}) => {
   const currentUserId = auth().currentUser.uid;
@@ -32,7 +33,9 @@ const PostCardFooter = ({post}) => {
           }
           iconType={'antdesign'}
           iconColor={
-            state.likedByUsers.includes(currentUserId) ? '#2196F3' : 'grey'
+            state.likedByUsers.includes(currentUserId)
+              ? COLORS.BLUE
+              : COLORS.GREY
           }
           onPress={likeClicked}
         />
@@ -40,7 +43,7 @@ const PostCardFooter = ({post}) => {
         <FooterIcon
           iconName={'chat'}
           iconType={'material'}
-          iconColor={'grey'}
+          iconColor={COLORS.GREY}
           onPress={openCommentsView}
         />
       </View>
@@ -68,7 +71,7 @@ const styles = StyleSheet.create({
   divider: {
     width: 1,
     height: 30,
-    backgroundColor: '#000000FF',
+    backgroundColor: COLORS.BLACK,
   },
   footerIconStyle: {width: 80},
 });
