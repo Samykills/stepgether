@@ -39,7 +39,9 @@ const CardTitle = ({
   return (
     <ListItem
       leftAvatar={
-        photoUrl.includes('http') ? {source: {uri: photoUrl}} : {title: {displayName}}
+        photoUrl.includes('http')
+          ? {source: {uri: photoUrl}}
+          : {title: {displayName}}
       }
       title={displayName}
       subtitle={<SubtitleComponent />}

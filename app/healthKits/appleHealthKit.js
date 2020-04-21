@@ -1,4 +1,4 @@
-import { Alert } from 'react-native';
+import {Alert} from 'react-native';
 import AppleHealthKit from 'rn-apple-healthkit';
 const PERMS = AppleHealthKit.Constants.Permissions;
 
