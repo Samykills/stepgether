@@ -41,6 +41,10 @@ const CreatePostView = props => {
       savePostToCollection(post)
         .then(res => {
           setIsLoading(false);
+          Snackbar.show({
+            text: 'Post Successful!',
+            duration: Snackbar.LENGTH_SHORT,
+          });
           navigation.goBack();
         })
         .catch(err => {

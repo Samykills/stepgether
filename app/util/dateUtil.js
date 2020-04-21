@@ -19,12 +19,12 @@ export const dateFormatPost = date => {
   if (differenceDays == 1) {
     if (differenceHour < 2) {
       if (differenceMinutes < 2) {
-        return differenceSeconds + ' secs ago';
+        return differenceSeconds + ' seconds ago';
       } else {
-        return differenceMinutes + ' mins ago';
+        return differenceMinutes + ' minutes ago';
       }
     } else {
-      return differenceHour + ' hr ago';
+      return differenceHour + ' hours ago';
     }
   } else if (differenceMinutes == 2) {
     return `Yesterday, ${dateObj.getHours()}:${dateObj.getMinutes()}`;
