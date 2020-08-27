@@ -1,52 +1,92 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, TouchableHighlight} from 'react-native';
 import PropTypes from 'prop-types';
 import StepgetherAvatar from '../../common/stepgetherAvatar';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
-import FastImage from 'react-native-fast-image';
+import COLORS from '../../../theme/colors';
+import AnimateNumber from 'react-native-animate-number';
 
-const profileBackgroundImage =
-  'http://new-cloudfront.zekkei-japan.jp/images/articles/871fd7574601ff2ada79c8fbb07e4917.jpg';
-const ProfileHeader = ({userInfo}) => {
+const DETAIL_TYPE = {
+  POSTS: 'Posts',
+  FOLLOWERS: 'Followers',
+  FOLLOWING: 'Following',
+};
+const ProfileHeader = ({userProfile}) => {
   return (
-    <View>
-      <FastImage
-        style={[styles.headerImage]}
-        source={{uri: profileBackgroundImage}}
-      />
-
+    <View style={[styles.headerContainer]}>
       <View style={[styles.avatar]}>
         <AnimatedCircularProgress
-          size={160}
+          size={90}
           width={3}
           fill={100}
-          tintColor={'blue'}
+          tintColor={COLORS.BLUE}
           children={() => (
             <StepgetherAvatar
-              size={150}
-              avatarType={userInfo.photoUrl}
-              title={userInfo.displayName}
+              size={80}
+              avatarType={userProfile.photoUrl}
+              title={userProfile.displayName}
             />
           )}
         />
-        <Text style={[styles.userName]}>{userInfo.displayName}</Text>
+        <Text style={[styles.userName]}>{userProfile.displayName}</Text>
+        <Text style={[styles.userName]}>{userProfile.emailId}</Text>
+      </View>
+      <View style={[styles.headerDetailsContainer]}>
+        <AnimatedDetails
+          value={288}
+          detailType={DETAIL_TYPE.POSTS}
+          onPress={() => {
+            alert('lol');
+          }}
+        />
+        <View style={[styles.details]}>
+          <Text style={[styles.userName]}>120</Text>
+          <Text style={[styles.userName]}>Followers</Text>
+        </View>
+        <View style={[styles.details]}>
+          <Text style={[styles.userName]}>255</Text>
+          <Text style={[styles.userName]}>Following</Text>
+        </View>
       </View>
     </View>
   );
 };
 
+const AnimatedDetails = ({value, detailType, onPressFunc}) => (
+  <TouchableHighlight style={[styles.details]} onPress={onPressFunc}>
+    <>
+      <AnimateNumber
+        style={[styles.userName]}
+        value={value}
+        formatter={val => {
+          return Math.ceil(val);
+        }}
+      />
+      <Text style={[styles.userName]}>{detailType}</Text>
+    </>
+  </TouchableHighlight>
+);
+
 const styles = StyleSheet.create({
-  headerImage: {height: 200, borderTopRightRadius: 10, borderTopLeftRadius: 10},
-  avatar: {
-    position: 'absolute',
-    left: '29%',
-    top: '50%',
-    justifyContent: 'center',
+  headerContainer: {
+    padding: 10,
+    flexDirection: 'row',
+  },
+  headerDetailsContainer: {
+    flex: 1,
+    backgroundColor: 'red',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
     alignItems: 'center',
   },
-  userName: {fontSize: 22, marginTop: 10},
+  details: {justifyContent: 'center', alignItems: 'center'},
+
+  avatar: {
+    // alignItems: 'center',
+  },
+  userName: {fontSize: 14, marginTop: 10},
 });
 ProfileHeader.propTypes = {
-  userInfo: PropTypes.object,
+  userProfile: PropTypes.object,
 };
 export default ProfileHeader;

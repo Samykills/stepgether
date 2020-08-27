@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from 'react';
-import {SafeAreaView, View, StyleSheet} from 'react-native';
+import {SafeAreaView, ActivityIndicator, StyleSheet, View} from 'react-native';
 import PropTypes from 'prop-types';
 import ProfileHeader from './profileHeader';
 import ProfileBody from './profileBody';
 import {getUserInfo} from '../../../firestore/userCollectionFirestoreFunctions';
+import COLORS from '../../../theme/colors';
 const SocialProfile = props => {
   const {userInfo} = props.route.params;
   const [userProfile, setUserProfile] = useState(null);
@@ -14,10 +15,16 @@ const SocialProfile = props => {
   }, []);
   return (
     <SafeAreaView style={[styles.container]}>
-      <View style={[styles.container]}>
-        <ProfileHeader userInfo={userInfo} />
-        {userProfile ? <ProfileBody userProfile={userProfile} /> : null}
-      </View>
+      {userProfile ? (
+        <>
+          <ProfileHeader userProfile={userProfile} />
+          <ProfileBody userProfile={userProfile} />
+        </>
+      ) : (
+        <View style={[styles.loadingContainer]}>
+          <ActivityIndicator color={COLORS.BLUE} />
+        </View>
+      )}
     </SafeAreaView>
   );
 };
@@ -26,7 +33,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-    padding: 10,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
   },
 });
 SocialProfile.propTypes = {
